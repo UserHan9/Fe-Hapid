@@ -28,7 +28,6 @@
 
         //remove permissions
         Cookies.remove('permissions');
-
         //redirect "/"
         window.location = '/';
         } else if (403 === error.response.status) {

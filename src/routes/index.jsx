@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from "react-router-dom";
+import DaftarlombaPages from '../pages/DaftarlombaPages.jsx';
+import DashboardPages from '../pages/DashboardPages.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -28,6 +30,8 @@ export default function RoutesIndex() {
       <Route path="/login" element={<Suspense fallback={<Loader />}><Login /></Suspense>} />
       <Route path="/UserDashboard" element={<UserDashboard />} />
       <Route path="/AdminDashboard" element={<AdminDashboard />} />
+      <Route path="/DaftarLomba" element={<DaftarlombaPages />} />
+      <Route path="/DashboardPages" element={<DashboardPages />} />
     </Routes>
   );
 }
