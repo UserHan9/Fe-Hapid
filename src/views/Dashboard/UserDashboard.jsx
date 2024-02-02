@@ -1,10 +1,11 @@
 import React from 'react';
-import Sidebar from '../../components/Sidebar';
+import Sidebar from '../../components/SidebarUser';
+
 
 const UserDashboard = () => {
   return (
     <div className='flex'>
-      <Sidebar />
+      <Sidebar/>
     <div className="bg-green-200 w-full">
       <div className="hero min-h-screen">
         <div className="flex-col lg:flex-row-reverse w-full">
