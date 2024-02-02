@@ -1,12 +1,22 @@
-import React from 'react'
-import AdminDashboard from '../views/Dashboard/AdminDashboard'
+import React from 'react';
+import Sidebar from '../components/Sidebar';
+
 const DaftarlombaPages = () => {
   return (
-      <div className='flex min-h-screen w-full'>
-        <AdminDashboard/>
-      <h1 className="text-5xl font-bold">Pages Lomba</h1>
+    <div className='flex'>
+      <Sidebar/>
+    <div className='bg-white-300'>
+    <div className="hero min-h-screen">
+    <div className="flex-col lg:flex-row-reverse w-full">
+      <div className='px-9'>
+        <h1 className="text-5xl font-bold">Lomba Pages</h1>
+        <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+      </div>
     </div>
-  )
-}
+  </div>
+  </div>
+  </div>
+  );
+};
 
 export default DaftarlombaPages

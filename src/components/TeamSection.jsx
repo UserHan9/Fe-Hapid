@@ -3,6 +3,7 @@ import image from '../assets/images/WhatsApp Image 2023-12-07 at 16.43.26_9fda8f
 
 const TeamSection = () => {
   return (
+    <>
     <div className="hero min-h-screen bg-base-300">
     <div className="hero-content text-center">
     <div className="card w-96 bg-base-100 shadow-xl">
@@ -16,6 +17,7 @@ const TeamSection = () => {
 </div>
 </div>
 </div>
+</>
   )
 }
 
