@@ -1,10 +1,13 @@
 import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import DaftarlombaPages from '../pages/DaftarlombaPages.jsx';
+import DataKelas from '../pages/DataKelas.jsx';
 import DashboardPages from '../pages/DashboardPages.jsx';
 import DaftarLombaUser from '../UserPages/DaftarLombaUser.jsx';
-import AddUser from '../pages/AddUser.jsx';
-import Default from '../layouts/Default.jsx';
+import DataLomba from '../pages/DataLomba.jsx';
+import JadwalLomba from '../pages/JadwalLomba.jsx';
+import Pemenang from '../pages/Pemenang.jsx';
+import Saran from '../pages/Saran.jsx';
+import RiwayatDaftar from '../pages/RiwayatDaftar.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -40,12 +43,16 @@ export default function RoutesIndex() {
       />
       {/* Route untuk admin */}
       <Route path="/AdminDashboard" element={<AdminDashboard />} />
-      <Route path="/UserDashboard" element={<UserDashboard />} />
-      <Route path="/DaftarLomba" element={<DaftarlombaPages />} />
       <Route path="/DashboardPages" element={<DashboardPages />} />
-      <Route path="/AddUser" element={<AddUser />} />
+      <Route path="/DataKelas" element={<DataKelas />} />
+      <Route path="/DataLomba" element={<DataLomba />} />
+      <Route path="/JadwalLomba" element={<JadwalLomba/>} />
+      <Route path="/Pemenang" element={<Pemenang/>} />
+      <Route path="/Saran" element={<Saran/>} />
+      <Route path="/RiwayatDaftar" element={<RiwayatDaftar/>} />
       {/* Route untuk User */}
       <Route path="/LombaPages" element={<DaftarLombaUser />} />
+      <Route path="/UserDashboard" element={<UserDashboard />} />
     </Routes>
   );
 }

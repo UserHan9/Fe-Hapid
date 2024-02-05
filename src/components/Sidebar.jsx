@@ -51,13 +51,13 @@ const Sidebar = () => {
 
   const Menus = [
     { title: 'Dashboard', icon: <BsBrowserEdge />, path: "/DashboardPages" },
-    { title: 'Data Kelas', icon: <MdOutlineDashboard />, path: "/DaftarLomba" },
-    { title: 'Data Lomba', icon : <PiBookOpenBold />  },
-    { title: 'Jadwal Lomba', spacing: true, icon: <MdOutlineSchedule/> },
-    { title: 'Pemenang', icon: <PiMedalBold />  },
-    { title: 'Kotak Saran', icon : <IoMailOpenOutline/> },
-    { title: 'Riwayat Daftar', icon : <FaRegBell />, spacing: true },
-    { title: 'Logout', icon: <MdOutlineLogout />, onClick: handleLogout },
+    { title: 'Data Kelas', icon: <MdOutlineDashboard />, path: "/DataKelas" },
+    { title: 'Data Lomba', icon : <PiBookOpenBold /> , path: "/DataLomba" },
+    { title: 'Jadwal Lomba', spacing: true, icon: <MdOutlineSchedule/> , path: "/JadwalLomba"},
+    { title: 'Pemenang', icon: <PiMedalBold /> , path: "/Pemenang"  },
+    { title: 'Kotak Saran', icon : <IoMailOpenOutline/>, path: "/Saran" },
+    { title: 'Riwayat Daftar', icon : <FaRegBell />, spacing: true , path: "/RiwayatDaftar" },
+    { title: 'Logout', icon: <MdOutlineLogout />, onClick: handleLogout , path: "/" },
   ];
 
   const handleNavigate = (path) => {
