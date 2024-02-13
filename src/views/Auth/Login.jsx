@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Api from '../../Api';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faArrowLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import toast from 'react-hot-toast';
 import Logo from '../../assets/images/Logo-Harmoni.png';
@@ -49,9 +49,17 @@ const Login = () => {
 
       console.log('Permissions:', permissions);
 
-      toast.success('Login Berhasil!', {
-        position: 'top-center',
-        duration: 4000,
+      toast.success('Keren!! Bisa Login 😎', {
+        position: 'top-right',
+        duration: 5000,
+        style: {
+          borderRadius: '0.5rem',
+          backgroundColor: '#10B981', // Warna hijau
+          padding: '1rem',
+          fontSize: '1.2rem',
+          fontWeight: 'bold',
+          color: 'white',
+        },
       });
 
       const userRole = roles && roles.length > 0 ? roles[0] : null;
@@ -108,14 +116,7 @@ const Login = () => {
                 <span className="md:w-6">
                   <FontAwesomeIcon icon={faEnvelope} />
                 </span>
-                <input
-                  id="email"
-                  type="text"
-                  className="form-control w-full border p-2 rounded-lg"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Masukkan Alamat Email"
-                />
+                <input id="email" type="text" className="form-control w-full border p-2 rounded-lg" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Masukkan Alamat Email" />
               </div>
             </div>
             <div className="mb-4">
@@ -126,26 +127,20 @@ const Login = () => {
                 <span className="md:w-6">
                   <FontAwesomeIcon icon={faLock} />
                 </span>
-                <input
-                  id="password"
-                  type="password"
-                  className="form-control w-full border p-2 rounded-lg"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="off"
-                  placeholder="Masukkan Kata Sandi Anda"
-                />
+                <input id="password" type="password" className="form-control w-full border p-2 rounded-lg" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off" placeholder="Masukkan Kata Sandi Anda" />
               </div>
             </div>
-            <button
-              onClick={handleLogin}
-              className="w-full py-2 bg-green-400 hover:bg-green-800 rounded-md mb-4 text-[20px]"
-              disabled={loading}
-            >
+            <button onClick={handleLogin} className="w-full py-2 bg-green-400 hover:bg-green-800 rounded-md mb-4 text-[20px]" disabled={loading}>
               {loading ? 'Sedang masuk, harap tunggu...' : 'Masuk'}
             </button>
             {errors && <p className="text-red-500">{errors}</p>}
-            <p className="text-gray-600 cursor-default px-2 text-[18px] font-semibold">Silakan masuk.</p>
+            {/* Tautan untuk kembali ke halaman utama */}
+            <Link to="/">
+              <p className="btn bg-green-400 text-gray-600 cursor-pointer px-2 text-[18px] font-semibold">
+                <FontAwesomeIcon icon={faArrowLeft} />
+                Ke Halaman Utama
+              </p>
+            </Link>
           </form>
         </div>
       </div>
