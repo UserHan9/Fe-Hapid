@@ -19,16 +19,16 @@ const SidebarUser = () => {
       setLoggingOut(true); // Set state loggingOut menjadi true saat logout dimulai
 
       await Api.post('/api/logout');
-  
+
       // Hapus cookies yang diset pada saat login
       Cookies.remove('token');
       Cookies.remove('user');
       Cookies.remove('permissions');
       Cookies.remove('role');
-  
+
       // Hapus token dari localStorage (jika perlu)
       localStorage.removeItem('token');
-  
+
       // Tampilkan notifikasi logout di homepage
       toast.success('Keren!! Anda berhasil logout 😎', {
         position: 'top-right',
@@ -58,15 +58,15 @@ const SidebarUser = () => {
       setLoggingOut(false); // Set state loggingOut menjadi false jika terjadi kesalahan pada proses logout
     }
   };
-  
+
   const Menus = [
-    { title: 'Dashboard', icon: <BsBrowserEdge />, path: '/DashboardPages' },
-    { title: 'Pages', icon: <MdOutlineDashboard />, path: '/DaftarLomba' },
-    { title: 'Media', spacing: true },
-    { title: 'Projects' },
-    { title: 'Analytics' },
-    { title: 'Profile', spacing: true },
-    { title: 'Setting' },
+    { title: 'Profile', icon: <BsBrowserEdge />, path: '/ProfileDashboard' },
+    { title: 'Dashboard', icon: <MdOutlineDashboard />, path: '/DashboardUser' },
+    { title: 'Daftar-Lomba', path: '/PendaftarLomba', spacing: true },
+    { title: 'Jadwal-Lomba', path: '/JadwalLombaUser' },
+    { title: 'Pemenang', path: '/PemenangUser' },
+    { title: 'Kotak-Saran', spacing: true, path: '/SaranUser' },
+    { title: 'Riwayat Daftar', path: '/RiwayatUser' },
     { title: 'Logout', spacing: true, onClick: handleLogout },
   ];
 

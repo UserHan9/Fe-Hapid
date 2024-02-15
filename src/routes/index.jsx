@@ -2,12 +2,19 @@ import React, { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DataKelas from '../pages/DataKelas.jsx';
 import DashboardPages from '../pages/DashboardPages.jsx';
-import DaftarLombaUser from '../UserPages/DaftarLombaUser.jsx';
+import DaftarLombaUser from '../UserPages/Dashboard.jsx';
 import DataLomba from '../pages/DataLomba.jsx';
 import JadwalLomba from '../pages/JadwalLomba.jsx';
 import Pemenang from '../pages/Pemenang.jsx';
 import Saran from '../pages/Saran.jsx';
 import RiwayatDaftar from '../pages/RiwayatDaftar.jsx';
+import Profile from '../UserPages/Profile.jsx';
+import DashboardUser from '../UserPages/DashboardUser.jsx';
+import PendaftaranLomba from '../UserPages/PendaftaranLomba.jsx';
+import JadwalLombaUser from '../UserPages/JadwalLombaUser.jsx';
+import PemenangUser from '../UserPages/PemenangUser.jsx';
+import RiwayatDaftarUser from '../UserPages/RiwayatDaftarUser.jsx';
+import SaranUser from '../UserPages/SaranUser.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -46,13 +53,20 @@ export default function RoutesIndex() {
       <Route path="/DashboardPages" element={<DashboardPages />} />
       <Route path="/DataKelas" element={<DataKelas />} />
       <Route path="/DataLomba" element={<DataLomba />} />
-      <Route path="/JadwalLomba" element={<JadwalLomba/>} />
-      <Route path="/Pemenang" element={<Pemenang/>} />
-      <Route path="/Saran" element={<Saran/>} />
-      <Route path="/RiwayatDaftar" element={<RiwayatDaftar/>} />
+      <Route path="/JadwalLomba" element={<JadwalLomba />} />
+      <Route path="/Pemenang" element={<Pemenang />} />
+      <Route path="/Saran" element={<Saran />} />
+      <Route path="/RiwayatDaftar" element={<RiwayatDaftar />} />
       {/* Route untuk User */}
-      <Route path="/LombaPages" element={<DaftarLombaUser />} />
+      <Route path="/DaftarLomba" element={<DaftarLombaUser />} />
+      <Route path="/DashboardUser" element={<DashboardUser />} />
       <Route path="/UserDashboard" element={<UserDashboard />} />
+      <Route path="/ProfileDashboard" element={<Profile />} />
+      <Route path="/PendaftarLomba" element={<PendaftaranLomba />} />
+      <Route path="/JadwalLombaUser" element={<JadwalLombaUser />} />
+      <Route path="/PemenangUser" element={<PemenangUser />} />
+      <Route path="/RiwayatUser" element={<RiwayatDaftarUser />} />
+      <Route path="/SaranUser" element={<SaranUser />} />
     </Routes>
   );
 }

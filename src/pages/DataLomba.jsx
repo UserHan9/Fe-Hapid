@@ -4,6 +4,7 @@ import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import Sidebar from '../components/Sidebar';
 import Swal from 'sweetalert2';
+import Edit from '../components/Edit';
 
 const DataLomba = () => {
   const [users, setUsers] = useState([]);
@@ -15,14 +16,14 @@ const DataLomba = () => {
     kontak: '',
     jumlah_pemain: '',
   });
-  const [editUser, setEditUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editUser, setEditUser] = useState(null); // Menyimpan data user yang akan diedit
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     fetchData();
-  }, [currentPage]); // Tambahkan currentPage sebagai dependency untuk memperbarui data saat currentPage berubah
+  }, [currentPage]);
 
   const fetchData = async () => {
     try {
@@ -39,43 +40,30 @@ const DataLomba = () => {
   };
 
   const handleEdit = (user) => {
-    setEditUser(user);
-    setNewUser({
-      nama_lomba: user.nama_lomba,
-      nama_peserta: user.nama_peserta,
-      nama_kelas: user.nama_kelas,
-      jurusan: user.jurusan,
-      kontak: user.kontak,
-      jumlah_pemain: user.jumlah_pemain,
-    });
-    setIsModalOpen(true);
+    setEditUser(user); // Set data user yang akan diedit ke state editUser
+    setIsModalOpen(true); // Buka modal edit
   };
 
-  const handleUpdateUser = async (event) => {
-    event.preventDefault();
-
+  const handleEditUser = async (editedUser) => {
     try {
-      await axios.put(`http://127.0.0.1:8000/api/lomba/update/${editUser.id}`, newUser);
+      await axios.put(`http://127.0.0.1:8000/api/lomba/update/${editedUser.id}`, editedUser);
       fetchData();
       Swal.fire({
-        title: 'Data teredit',
-        text: 'Data peserta berhasil diedit.',
+        title: 'Sukses!',
+        text: 'Data peserta berhasil diubah.',
         icon: 'success',
       });
     } catch (error) {
-      console.error('Error updating user:', error);
+      console.error('Error editing user:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to edit user.',
+        icon: 'error',
+      });
     }
 
-    setEditUser(null);
-    setNewUser({
-      nama_lomba: '',
-      nama_peserta: '',
-      nama_kelas: '',
-      jurusan: '',
-      kontak: '',
-      jumlah_pemain: '',
-    });
-    setIsModalOpen(false);
+    setIsModalOpen(false); // Tutup modal edit
+    setEditUser(null); // Reset editUser setelah pengeditan selesai
   };
 
   const handleDelete = async (userId) => {
@@ -108,7 +96,7 @@ const DataLomba = () => {
 
     try {
       await axios.post('http://127.0.0.1:8000/api/lomba/create', newUser);
-      await fetchData();
+      fetchData();
       Swal.fire({
         title: 'Sukses!',
         text: 'Data peserta berhasil ditambahkan.',
@@ -116,6 +104,11 @@ const DataLomba = () => {
       });
     } catch (error) {
       console.error('Error adding user:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Failed to add user.',
+        icon: 'error',
+      });
     }
 
     setNewUser({
@@ -127,6 +120,7 @@ const DataLomba = () => {
       jumlah_pemain: '',
     });
     setIsModalOpen(false);
+    setEditUser(null); // Reset editUser setelah penambahan user selesai
   };
 
   return (
@@ -181,56 +175,50 @@ const DataLomba = () => {
           ))}
         </div>
         <div className="flex justify-center items-center mt-5">
-          <button className="btn" onClick={() => setIsModalOpen(true)}>
-            Tambah Peserta
+          <button className="bg-green-400 px-4 py-2 rounded-lg" onClick={() => setIsModalOpen(true)}>
+            Tambah User
           </button>
         </div>
         {isModalOpen && (
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-4 rounded w-96">
-              <h3 className="font-bold text-lg mb-4">{editUser ? 'Edit Peserta' : 'Tambah Peserta Baru'}</h3>
-              <form onSubmit={editUser ? handleUpdateUser : handleAddUser}>
-                <div className="mb-4">
-                  <label className="block mb-2">Nama Lomba:</label>
-                  <input type="text" value={newUser.nama_lomba} onChange={(e) => setNewUser({ ...newUser, nama_lomba: e.target.value })} className="w-full p-2 border" />
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-2">Nama Peserta:</label>
-                  <input type="text" value={newUser.nama_peserta} onChange={(e) => setNewUser({ ...newUser, nama_peserta: e.target.value })} className="w-full p-2 border" />
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-2">Kelas:</label>
-                  <input type="text" value={newUser.nama_kelas} onChange={(e) => setNewUser({ ...newUser, nama_kelas: e.target.value })} className="w-full p-2 border" />
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-2">Jurusan:</label>
-                  <select value={newUser.jurusan} onChange={(e) => setNewUser({ ...newUser, jurusan: e.target.value })} className="w-full p-2 border">
-                    <option value="">Pilih Jurusan</option>
-                    <option value="PPLG">PPLG</option>
-                    <option value="ANIMASI">ANIMASI</option>
-                    <option value="BCF">BCF</option>
-                    <option value="TO">TO</option>
-                    <option value="TPFL">TPFL</option>
-                  </select>
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-2">Kontak:</label>
-                  <input type="text" value={newUser.kontak} onChange={(e) => setNewUser({ ...newUser, kontak: e.target.value })} className="w-full p-2 border" />
-                </div>
-                <div className="mb-4">
-                  <label className="block mb-2">Jumlah Siswa:</label>
-                  <input type="text" value={newUser.jumlah_pemain} onChange={(e) => setNewUser({ ...newUser, jumlah_pemain: e.target.value })} className="w-full p-2 border" />
-                </div>
-                <div className="flex justify-end">
-                  <button type="submit" className="btn bg-green-500 text-white mx-1">
-                    {editUser ? 'Update' : 'Simpan'}
-                  </button>
-                  <button type="button" onClick={() => setIsModalOpen(false)} className="btn bg-red-500 mx-1 text-white">
-                    Batal
-                  </button>
-                </div>
+          <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+            {editUser ? (
+              <Edit user={editUser} setIsModalOpen={setIsModalOpen} fetchData={fetchData} handleEditUser={handleEditUser} />
+            ) : (
+              <div className="bg-white p-8 rounded-lg">
+              <form onSubmit={handleAddUser}>
+                <label className="block mb-4">
+                  Nama Lomba:
+                  <input type="text" value={newUser.nama_lomba} onChange={(e) => setNewUser({ ...newUser, nama_lomba: e.target.value })} className="block w-full border-gray-300 rounded-lg p-2" />
+                </label>
+                <label className="block mb-4">
+                  Nama Perwakilan:
+                  <input type="text" value={newUser.nama_peserta} onChange={(e) => setNewUser({ ...newUser, nama_peserta: e.target.value })} className="block w-full border-gray-300 rounded-lg p-2" />
+                </label>
+                <label className="block mb-4">
+                  Kelas:
+                  <input type="text" value={newUser.nama_kelas} onChange={(e) => setNewUser({ ...newUser, nama_kelas: e.target.value })} className="block w-full border-gray-300 rounded-lg p-2" />
+                </label>
+                <label className="block mb-4">
+                  Jurusan:
+                  <input type="text" value={newUser.jurusan} onChange={(e) => setNewUser({ ...newUser, jurusan: e.target.value })} className="block w-full border-gray-300 rounded-lg p-2" />
+                </label>
+                <label className="block mb-4">
+                  Kontak:
+                  <input type="text" value={newUser.kontak} onChange={(e) => setNewUser({ ...newUser, kontak: e.target.value })} className="block w-full border-gray-300 rounded-lg p-2" />
+                </label>
+                <label className="block mb-4">
+                  Jumlah Pemain:
+                  <input type="text" value={newUser.jumlah_pemain} onChange={(e) => setNewUser({ ...newUser, jumlah_pemain: e.target.value })} className="block w-full border-gray-300 rounded-lg p-2" />
+                </label>
+                <button type="submit" className="bg-green-400 px-4 py-2 rounded-lg">
+                  Simpan
+                </button>
+                <button type="button" className="ml-2 bg-red-400 px-4 py-2 rounded-lg" onClick={() => setIsModalOpen(false)}>
+                  Batal
+                </button>
               </form>
-            </div>
+              </div>
+            )}
           </div>
         )}
       </div>
