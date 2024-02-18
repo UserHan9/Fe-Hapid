@@ -7,6 +7,7 @@ import { BsBrowserEdge } from 'react-icons/bs';
 import Api from '../Api'; // Sesuaikan dengan path ke file API Anda
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SidebarUser = () => {
   const [open, setOpen] = useState(true);
@@ -30,17 +31,13 @@ const SidebarUser = () => {
       localStorage.removeItem('token');
 
       // Tampilkan notifikasi logout di homepage
-      toast.success('Keren!! Anda berhasil logout 😎', {
+      toast.success('Anda berhasil logout', {
         position: 'top-right',
-        duration: 2500,
-        style: {
-          borderRadius: '0.5rem',
-          backgroundColor: '#10B981', // Warna hijau
-          padding: '1rem',
-          fontSize: '1.2rem',
-          fontWeight: 'bold',
-          color: 'white',
-        },
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       });
 
       // Set timeout untuk menandakan bahwa proses logout sudah selesai dan mengubah state loggingOut menjadi false
@@ -53,15 +50,19 @@ const SidebarUser = () => {
       // Handle error or show an error toast
       toast.error('Logout Error', {
         position: 'top-right',
-        duration: 4000,
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
       });
       setLoggingOut(false); // Set state loggingOut menjadi false jika terjadi kesalahan pada proses logout
     }
   };
 
   const Menus = [
-    { title: 'Profile', icon: <BsBrowserEdge />, path: '/ProfileDashboard' },
     { title: 'Dashboard', icon: <MdOutlineDashboard />, path: '/DashboardUser' },
+    { title: 'Profile', icon: <BsBrowserEdge />, path: '/ProfileDashboard' },
     { title: 'Daftar-Lomba', path: '/PendaftarLomba', spacing: true },
     { title: 'Jadwal-Lomba', path: '/JadwalLombaUser' },
     { title: 'Pemenang', path: '/PemenangUser' },

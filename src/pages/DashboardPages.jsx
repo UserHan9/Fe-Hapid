@@ -6,7 +6,7 @@ const DashboardPages = () => {
   const totalWinners = 1;
   const TotalPertandingan = 4;
   return (
-    <div className="flex">
+    <div className="flex bg-green-50">
       <Sidebar />
       <div className="flex">
         <div className="hero min-h-screen">
