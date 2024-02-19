@@ -69,6 +69,7 @@ const Sidebar = () => {
     { title: 'Pemenang', icon: <PiMedalBold />, path: '/Pemenang' },
     { title: 'Kotak Saran', icon: <IoMailOpenOutline />, path: '/Saran' },
     { title: 'Riwayat Daftar', icon: <FaRegBell />, spacing: true, path: '/RiwayatDaftar' },
+    { title: 'Buat Lomba', icon: <FaRegBell />, spacing: true, path: '/Posts' },
     { title: 'Logout', icon: <MdOutlineLogout />, onClick: handleLogout, path: '/' },
   ];
 

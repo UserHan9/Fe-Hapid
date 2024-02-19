@@ -15,6 +15,7 @@ import JadwalLombaUser from '../UserPages/JadwalLombaUser.jsx';
 import PemenangUser from '../UserPages/PemenangUser.jsx';
 import RiwayatDaftarUser from '../UserPages/RiwayatDaftarUser.jsx';
 import SaranUser from '../UserPages/SaranUser.jsx';
+import PostsLomba from '../pages/PostsLomba.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -57,6 +58,7 @@ export default function RoutesIndex() {
       <Route path="/Pemenang" element={<Pemenang />} />
       <Route path="/Saran" element={<Saran />} />
       <Route path="/RiwayatDaftar" element={<RiwayatDaftar />} />
+      <Route path="/Posts" element={<PostsLomba />} />
       {/* Route untuk User */}
       <Route path="/DaftarLomba" element={<DaftarLombaUser />} />
       <Route path="/DashboardUser" element={<DashboardUser />} />
