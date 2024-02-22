@@ -16,6 +16,7 @@ import PemenangUser from '../UserPages/PemenangUser.jsx';
 import RiwayatDaftarUser from '../UserPages/RiwayatDaftarUser.jsx';
 import SaranUser from '../UserPages/SaranUser.jsx';
 import PostsLomba from '../pages/PostsLomba.jsx';
+import AddUserForm from '../components/AddUserForm.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -49,6 +50,14 @@ export default function RoutesIndex() {
           </Suspense>
         }
       />
+      <Route
+        path="/MendaftarLomba"
+        element={
+          <Suspense fallback={<Loader />}>
+            <AddUserForm />
+          </Suspense>
+        }
+      />
       {/* Route untuk admin */}
       <Route path="/AdminDashboard" element={<AdminDashboard />} />
       <Route path="/DashboardPages" element={<DashboardPages />} />
@@ -57,6 +66,7 @@ export default function RoutesIndex() {
       <Route path="/JadwalLomba" element={<JadwalLomba />} />
       <Route path="/Pemenang" element={<Pemenang />} />
       <Route path="/Saran" element={<Saran />} />
+      <Route path="/PostsLomba" element={<PostsLomba />} />
       <Route path="/RiwayatDaftar" element={<RiwayatDaftar />} />
       <Route path="/Posts" element={<PostsLomba />} />
       {/* Route untuk User */}

@@ -46,11 +46,10 @@ const Sidebar = () => {
         },
       });
 
-
       // Redirect ke halaman login setelah jeda waktu
       setTimeout(() => {
         navigate('/login?logout=true');
-      }, 2000);// Sesuaikan waktu jeda sesuai kebutuhan, misalnya 2000 milidetik (2 detik)
+      }, 2000); // Sesuaikan waktu jeda sesuai kebutuhan, misalnya 2000 milidetik (2 detik)
     } catch (error) {
       console.error('Terjadi kesalahan saat logout:', error);
       // Tangani kesalahan atau tampilkan notifikasi kesalahan
@@ -68,6 +67,7 @@ const Sidebar = () => {
     { title: 'Jadwal Lomba', spacing: true, icon: <MdOutlineSchedule />, path: '/JadwalLomba' },
     { title: 'Pemenang', icon: <PiMedalBold />, path: '/Pemenang' },
     { title: 'Kotak Saran', icon: <IoMailOpenOutline />, path: '/Saran' },
+    { title: 'Posts Lomba', icon: <IoMailOpenOutline />, path: '/PostsLomba' },
     { title: 'Riwayat Daftar', icon: <FaRegBell />, spacing: true, path: '/RiwayatDaftar' },
     { title: 'Buat Lomba', icon: <FaRegBell />, spacing: true, path: '/Posts' },
     { title: 'Logout', icon: <MdOutlineLogout />, onClick: handleLogout, path: '/' },
