@@ -63,7 +63,7 @@ const Sidebar = () => {
   const Menus = [
     { title: 'Dashboard', icon: <BsBrowserEdge />, path: '/DashboardPages' },
     { title: 'Data Kelas', icon: <MdOutlineDashboard />, path: '/DataKelas' },
-    { title: 'Data Lomba', icon: <PiBookOpenBold />, path: '/DataLomba' },
+    { title: 'Data Peserta', icon: <PiBookOpenBold />, path: '/DataLomba' },
     { title: 'Jadwal Lomba', spacing: true, icon: <MdOutlineSchedule />, path: '/JadwalLomba' },
     { title: 'Pemenang', icon: <PiMedalBold />, path: '/Pemenang' },
     { title: 'Kotak Saran', icon: <IoMailOpenOutline />, path: '/Saran' },

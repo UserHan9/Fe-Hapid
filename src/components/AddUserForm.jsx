@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AddUserForm = () => {
   const [newUser, setNewUser] = useState({
@@ -52,41 +51,36 @@ const AddUserForm = () => {
   return (
     <div className="bg-white p-8 rounded-lg">
       <h1 className="text-2xl mb-4 font-bold">Form Pendaftaran :</h1>
-      <form onSubmit={handleSubmit}>
-        <p className="text-[18px] mb-2">Nama Lomba:</p>
-        <div className="mb-4">
-          <label>
-            <input type="text" placeholder="Volly" name="nama_lomba" className="input input-bordered input-accent w-full max-w-xs" value={newUser.nama_lomba} onChange={handleInputChange} />
-          </label>
-        </div>
-        <p className="text-[18px] mb-2">Nama Perwakilan:</p>
-        <div className="mb-4">
-          <label>
-            <input type="text" placeholder="Mekabot" name="nama_peserta" className="input input-bordered input-accent w-full max-w-xs" value={newUser.nama_peserta} onChange={handleInputChange} />
-          </label>
-        </div>
-        <label className="block mb-4">
-          Kelas:
-          <input type="text" name="nama_kelas" value={newUser.nama_kelas} onChange={handleInputChange} className="block w-full border-gray-300 rounded-lg p-2" />
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <label className="flex flex-col mb-1">
+          <p className="text-[16px]">Nama Lomba:</p>
+          <input type="text" placeholder="Volly" name="nama_lomba" value={newUser.nama_lomba} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
         </label>
-        <label className="block mb-4">
-          Jurusan:
-          <input type="text" name="jurusan" value={newUser.jurusan} onChange={handleInputChange} className="block w-full border-gray-300 rounded-lg p-2" />
+        <label className="flex flex-col mb-1">
+          <p className="text-[16px]">Nama Peserta:</p>
+          <input type="text" placeholder="Mekabot" name="nama_peserta" value={newUser.nama_peserta} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
         </label>
-        <label className="block mb-4">
-          Kontak:
-          <input type="text" name="kontak" value={newUser.kontak} onChange={handleInputChange} className="block w-full border-gray-300 rounded-lg p-2" />
+        <label className="flex flex-col mb-1">
+          <p className="text-[16px]">Kelas:</p>
+          <input type="text" placeholder="11 PPLG 3" name="nama_kelas" value={newUser.nama_kelas} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
         </label>
-        <label className="block mb-4">
-          Jumlah Pemain:
-          <input type="text" name="jumlah_pemain" value={newUser.jumlah_pemain} onChange={handleInputChange} className="block w-full border-gray-300 rounded-lg p-2" />
+        <label className="flex flex-col mb-1">
+          <p className="text-[16px]">Jurusan:</p>
+          <input type="text" placeholder="PPLG" name="jurusan" value={newUser.jurusan} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
+        </label>
+        <label className="flex flex-col mb-1">
+          <p className="text-[16px]">Kontak:</p>
+          <input type="text" placeholder="0989089XXXX" name="kontak" value={newUser.kontak} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
+        </label>
+        <label className="flex flex-col mb-1">
+          <p className="text-[16px]">Jumlah Pemain:</p>
+          <input type="text" placeholder="12" name="jumlah_pemain" value={newUser.jumlah_pemain} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
         </label>
         <div className="flex gap-4">
           <button type="submit" className="btn bg-green-400 text-gray-600 cursor-pointer px-2 text-[18px] font-semibold">
             Daftar
           </button>
           <Link to="/PendaftarLomba">
-            <FontAwesomeIcon />
             <p className="btn bg-green-400 text-gray-600 cursor-pointer px-2 text-[18px] font-semibold">Kembali Ke Halaman Daftar</p>
           </Link>
         </div>

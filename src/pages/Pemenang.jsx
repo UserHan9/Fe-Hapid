@@ -12,7 +12,9 @@ const Pemenang = () => {
           </figure>
           <div className="card-body items-center text-center">
             <h2 className="card-title">Shoes!</h2>
-            <p>Pemenang dari permainan Handball, dapat sepatu?</p>
+            <p>
+              Pemenang dari permainan <span>Muhammad Hafidz</span>
+            </p>
             <div className="card-actions">
               <button className="btn btn-primary">Detail</button>
             </div>
