@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
+import axios from 'axios';
 const DataKelas = () => {
   const [users, setUsers] = useState([
     { id: 1, name: 'Raihan indra', Jurusan: 'Animasi', JumlahSiswa: '32' },
@@ -15,6 +16,7 @@ const DataKelas = () => {
   const handleEdit = (userId) => {
     console.log(`Edit user with ID ${userId}`);
   };
+
 
   const handleDelete = (userId) => {
     console.log(`Delete user with ID ${userId}`);

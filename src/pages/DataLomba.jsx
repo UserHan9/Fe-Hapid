@@ -87,7 +87,7 @@ const DataLomba = () => {
     <div className="flex">
       <Sidebar />
       <div className="overflow-x-auto mx-auto my-8">
-        <h1 className="text-3xl font-bold mb-6 ml-3">Data Lomba - Data Peserta</h1>
+        <h1 className="text-3xl font-bold mb-6 ml-3">Data Peserta - SI-Classmeet</h1>
         <table className="table w-full mt-10">
           <thead>
             <tr>
