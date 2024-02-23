@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 const JadwalLomba = () => {
   const [users, setUsers] = useState([]);
-  const [newUser, setNewUser] = useState({ nama_lomba: '', tempat: '', kelas: '', tanggal: '', keterangan: '' });
+  const [newUser, setNewUser] = useState({ nama_lomba: '', tempat: '', kelas: '', tanggal: '', waktu: '', keterangan: '' });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
 
@@ -17,7 +17,7 @@ const JadwalLomba = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://localhost:8000/api/jadwal/show');
+      const response = await axios.get('http://127.0.0.1:8000/api/jadwal/show');
       setUsers(response.data.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -33,51 +33,20 @@ const JadwalLomba = () => {
   const handleUpdate = async (event) => {
     event.preventDefault();
     try {
-      await axios.put(`http://localhost:8000/api/jadwal/update/${selectedUserId}`, newUser);
-      await fetchData(); // Mengambil data lagi setelah pembaruan
-      Swal.fire({
-        title: 'Success!',
-        text: 'Data telah berhasil diperbarui.',
-        icon: 'success',
-      });
+      await axios.put(`http://127.0.0.1:8000/api/jadwal/update/${selectedUserId}`, newUser);
+      await fetchData();
       setIsModalOpen(false);
     } catch (error) {
       console.error('Error updating user:', error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'Terjadi kesalahan saat memperbarui data.',
-        icon: 'error',
-      });
     }
   };
 
   const handleDelete = async (userId) => {
     try {
-      const result = await Swal.fire({
-        title: 'Yakin Hapus?',
-        text: 'Data akan dihapus dari database',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, Hapus saja!',
-      });
-      if (result.isConfirmed) {
-        await axios.delete(`http://localhost:8000/api/jadwal/destroy/${userId}`);
-        await fetchData(); // Mengambil data lagi setelah penghapusan
-        Swal.fire({
-          title: 'Deleted!',
-          text: 'Data telah berhasil dihapus.',
-          icon: 'success',
-        });
-      }
+      await axios.delete(`http://127.0.0.1:8000/api/jadwal/destroy/${userId}`);
+      await fetchData();
     } catch (error) {
       console.error('Error deleting user:', error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'Terjadi kesalahan saat menghapus data.',
-        icon: 'error',
-      });
     }
   };
 
@@ -85,14 +54,9 @@ const JadwalLomba = () => {
     event.preventDefault();
 
     try {
-      await axios.post('http://localhost:8000/api/jadwal/create', newUser);
+      await axios.post('http://127.0.0.1:8000/api/jadwal/create', newUser);
       await fetchData();
-      Swal.fire({
-        title: 'Sukses!',
-        text: 'Data peserta berhasil ditambahkan.',
-        icon: 'success',
-      });
-      setNewUser({ nama_lomba: '', tempat: '', kelas: '', tanggal: '', keterangan: '' });
+      setNewUser({ nama_lomba: '', tempat: '', kelas: '', tanggal: '', waktu: '', keterangan: '' });
       setIsModalOpen(false);
     } catch (error) {
       console.error('Error adding user:', error);
@@ -112,6 +76,7 @@ const JadwalLomba = () => {
               <th className="text-[23px] text-center">Tempat</th>
               <th className="text-[23px] text-center">Kelas</th>
               <th className="text-[23px] text-center">Tanggal</th>
+              <th className="text-[23px] text-center">Waktu</th>
               <th className="text-[23px] text-center">Keterangan</th>
               <th className="text-[23px] text-center">Action</th>
             </tr>
@@ -124,6 +89,7 @@ const JadwalLomba = () => {
                 <td className="text-[18px] border text-center">{user.tempat}</td>
                 <td className="text-[18px] border text-center">{user.kelas}</td>
                 <td className="text-[18px] border text-center">{user.tanggal}</td>
+                <td className="text-[18px] border text-center">{user.waktu}</td>
                 <td className="text-[18px] border text-center">{user.keterangan}</td>
                 <td className="text-[18px] border text-center">
                   <div className="flex">
@@ -163,6 +129,8 @@ const JadwalLomba = () => {
                 <input type="text" value={newUser.kelas} onChange={(e) => setNewUser({ ...newUser, kelas: e.target.value })} className="w-full mb-4 p-2 border" />
                 <label className="block mb-2">Tanggal:</label>
                 <input type="date" value={newUser.tanggal} onChange={(e) => setNewUser({ ...newUser, tanggal: e.target.value })} className="w-full mb-4 p-2 border" />
+                <label className="block mb-2">Waktu:</label>
+                <input type="time" value={newUser.waktu} onChange={(e) => setNewUser({ ...newUser, waktu: e.target.value + ':00' })} className="w-full mb-4 p-2 border" />
                 <label className="block mb-2">Keterangan:</label>
                 <select value={newUser.keterangan} onChange={(e) => setNewUser({ ...newUser, keterangan: e.target.value })} className="w-full mb-4 p-2 border">
                   <option value="">Pilih Keterangan</option>

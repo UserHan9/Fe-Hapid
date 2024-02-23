@@ -1,108 +1,65 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import { CiEdit } from "react-icons/ci";
-import { MdDelete } from "react-icons/md";
 import axios from 'axios';
-const DataKelas = () => {
-  const [users, setUsers] = useState([
-    { id: 1, name: 'Raihan indra', Jurusan: 'Animasi', JumlahSiswa: '32' },
-    { id: 2, name: 'Hafidz Furqon', Jurusan: 'PPLG', JumlahSiswa: '34' },
-    { id: 3, name: 'Nabil Attala', Jurusan: 'Teknik Otomotif', JumlahSiswa: '35' },
-  ]);
+import Swal from 'sweetalert2';
+import Sidebar from '../components/Sidebar';
+import image from '../assets/images/Logo-Harmoni.png';
+const CreateUser = () => {
+  const [user, setUser] = useState({ name: '', email: '', password: '', password_confirmation: '' });
 
-  const [newUser, setNewUser] = useState({ name: '', Jurusan: '', JumlahSiswa: 0 });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleEdit = (userId) => {
-    console.log(`Edit user with ID ${userId}`);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
   };
 
-
-  const handleDelete = (userId) => {
-    console.log(`Delete user with ID ${userId}`);
-  };
-
-  const handleAddUser = () => {
-    console.log('Add new user');
-    setUsers([...users, { id: users.length + 1, ...newUser }]);
-    setNewUser({ name: '', Jurusan: '', JumlahSiswa: 0 });
-    setIsModalOpen(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/register', user);
+      console.log(response.data);
+      Swal.fire({
+        title: 'Sukses!',
+        text: 'Data peserta berhasil ditambahkan.',
+        icon: 'success',
+      });
+      setUser({ name: '', email: '', password: '', password_confirmation: '' });
+    } catch (error) {
+      console.error(error);
+      alert('Failed to create user. Please try again.');
+    }
   };
 
   return (
-    <div className='flex'>
+    <div className="flex">
       <Sidebar />
-      <div className="overflow-x-auto mx-auto my-8">
-        <h1 className="text-3xl font-bold mb-6">Data Kelas - Data Users</h1>
-        <table className="table w-full mt-10">
-          <thead>
-            <tr>
-              <th className="text-[23px] text-center">ID</th>
-              <th className="text-[23px] text-center">Nama Kelas</th>
-              <th className="text-[23px] text-center">Jurusan</th>
-              <th className="text-[23px] text-center">Jumlah Siswa</th>
-              <th className="text-[23px] text-center">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map(user => (
-              <tr key={user.id}>
-                <td className="text-[19px] border text-center">{user.id}</td>
-                <td className="text-[19px] border text-center">{user.name}</td>
-                <td className="text-[19px] border text-center">{user.Jurusan}</td>
-                <td className="text-[19px] border text-center">{user.JumlahSiswa}</td>
-                <td className="text-[19px] border text-center">
-                  <div className="flex">
-                <button className="mr-3 flex mb-2" onClick={() => handleEdit(user.id)} >
-                    <CiEdit className='mr-1'/>
-                    Edit</button>
-                  <button onClick={() => handleDelete(user.id)} className='flex'>
-                    <MdDelete className='mr-1'/>
-                    Delete</button>
-                    </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        <div className="flex justify-between items-center mt-5">
-          <button className="btn" onClick={() => setIsModalOpen(true)}>Tambah User</button>
-        </div>
-        {isModalOpen && (
-          <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
-            <div className="bg-white p-4 rounded w-96">
-              <h3 className="font-bold text-lg mb-4">Tambah User Baru</h3>
-              <form onSubmit={handleAddUser}>
-                <label className="block mb-2">Nama:</label>
-                <input
-                  type="text"
-                  value={newUser.name}
-                  onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-                  className="w-full mb-4 p-2 border"
-                />
-                <label className="block mb-2">Jurusan:</label>
-                <input
-                  type="text"
-                  value={newUser.Jurusan}
-                  onChange={(e) => setNewUser({ ...newUser, Jurusan: e.target.value })}
-                  className="w-full mb-4 p-2 border"
-                />
-                <label className="block mb-2">Jumlah Siswa:</label>
-                <input
-                  type="number"
-                  value={newUser.JumlahSiswa}
-                  onChange={(e) => setNewUser({ ...newUser, JumlahSiswa: parseInt(e.target.value, 10) })}
-                  className="w-full mb-4 p-2 border"
-                />
-                <button type="submit" className="btn bg-green-500 text-white mx-1">Simpan</button>
-              <button onClick={() => setIsModalOpen(false)} className="btn bg-red-500 mx-1 text-white mt-5">Batal</button>
-              </form>
+      <div className="px-3 mx-auto mt-20">
+        <h1 className="text-3xl font-bold mb-6 ml-3 mt-5">Create-account - SI-Classmeet</h1>
+        <div className="bg-green-100 shadow-xl rounded-md p-6 flex">
+          <img src={image} alt="" className="max-w-80" />
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+            <div className="flex items-center">
+              <label className="font-semibold text-[18px] flex-1">Name:</label>
+              <input placeholder="Input Username" className="bg-green-100 rounded-md px-10 py-2 flex-1 border" type="text" name="name" value={user.name} onChange={handleChange} required />
             </div>
-          </div>
-        )}
+            <div className="flex items-center">
+              <label className="font-semibold text-[18px] flex-1">Email:</label>
+              <input placeholder="Input @Email" className="bg-green-100 rounded-md px-10 py-2 flex-1 border" type="email" name="email" value={user.email} onChange={handleChange} required />
+            </div>
+            <div className="flex items-center">
+              <label className="font-semibold text-[18px] flex-1">Password:</label>
+              <input placeholder="Input Password" className="bg-green-100 rounded-md px-10 py-2 flex-1 border" type="password" name="password" value={user.password} onChange={handleChange} required />
+            </div>
+            <div className="flex items-center">
+              <label className="font-semibold text-[18px] flex-1 mr-2">Confirm Password:</label>
+              <input placeholder="Confirm Password" className="bg-green-100 rounded-md px-10 py-2 flex-1 border" type="password" name="password_confirmation" value={user.password_confirmation} onChange={handleChange} required />
+            </div>
+            <button type="submit" className="bg-green-300 px-5 py-3 rounded-md text-[18px] font-semibold mt-3">
+              Create User
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
 };
 
-export default DataKelas;
+export default CreateUser;

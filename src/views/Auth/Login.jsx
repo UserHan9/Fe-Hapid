@@ -1,71 +1,55 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Api from '../../Api';
+import axios from 'axios';
 import Cookies from 'js-cookie';
-import { faEnvelope, faLock, faArrowLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import toast from 'react-hot-toast';
 import Logo from '../../assets/images/Logo-Harmoni.png';
 
 const Login = () => {
-  // State hooks
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
-
-  // Navigation hook
+  document.title = 'Login Page';
   const navigate = useNavigate();
 
-  // Effect hook untuk memeriksa token yang sudah ada
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      navigate('/'); // Sesuaikan rute jika diperlukan
-    }
-  }, [navigate]);
-
-  // Handler untuk proses login
   const handleLogin = async () => {
     setLoading(true);
-    setErrors(null); // Menghapus error sebelumnya
-
+    setErrors(null);
+  
     try {
-      const response = await Api.post('/api/login', {
+      const response = await axios.post('http://127.0.0.1:8000/api/login', {
         email,
         password,
       });
-
-      const { token, user, permissions, roles } = response.data;
-
-      // Simpan token ke cookies
+  
+      const { data } = response.data;
+      const { user, token, roles } = data;
+  
       Cookies.set('token', token);
       Cookies.set('user', JSON.stringify(user));
-      Cookies.set('permissions', JSON.stringify(permissions));
-      Cookies.set('role', roles && roles.length > 0 ? roles[0] : null);
-
-      // Simpan token ke localStorage
+      Cookies.set('roles', JSON.stringify(roles));
+  
       localStorage.setItem('token', token);
-
-      console.log('Permissions:', permissions);
-
-      toast.success('Keren!! Bisa Login 😎', {
+      localStorage.setItem('user', JSON.stringify(user));
+  
+      toast.success('Login berhasil!', {
         position: 'top-right',
         duration: 5000,
         style: {
           borderRadius: '0.5rem',
-          backgroundColor: '#10B981', // Warna hijau
+          backgroundColor: '#10B981',
           padding: '1rem',
           fontSize: '1.2rem',
           fontWeight: 'bold',
           color: 'white',
         },
       });
-
-      const userRole = roles && roles.length > 0 ? roles[0] : null;
-
-      if (userRole) {
-        switch (userRole) {
+  
+      if (roles && roles.length > 0) {
+        switch (roles[1]) {
           case 'admin':
             navigate('/AdminDashboard');
             break;
@@ -73,16 +57,16 @@ const Login = () => {
             navigate('/UserDashboard');
             break;
           default:
-            console.error('Peran tidak dikenali:', userRole);
+            console.error('Peran tidak dikenali:', roles[1]);
             navigate('/default-dashboard');
         }
       } else {
-        console.error('Tidak ada peran ditemukan dalam respons:', roles);
-        // Tangani jika tidak ada peran dalam respons
+        console.error('Roles kosong atau tidak terdefinisi');
+        // Handle jika roles kosong atau tidak terdefinisi
       }
     } catch (error) {
       console.error('Kesalahan login:', error);
-
+  
       if (error.response) {
         setErrors(error.response.data.message);
       } else if (error.request) {
@@ -94,6 +78,8 @@ const Login = () => {
       setLoading(false);
     }
   };
+  
+  
 
   return (
     <div className="w-full h-screen flex rounded-lg">
@@ -134,7 +120,6 @@ const Login = () => {
               {loading ? 'Sedang masuk, harap tunggu...' : 'Masuk'}
             </button>
             {errors && <p className="text-red-500">{errors}</p>}
-            {/* Tautan untuk kembali ke halaman utama */}
             <Link to="/">
               <p className="btn bg-green-400 text-gray-600 cursor-pointer px-2 text-[18px] font-semibold">
                 <FontAwesomeIcon icon={faArrowLeft} />
@@ -149,3 +134,4 @@ const Login = () => {
 };
 
 export default Login;
+

@@ -6,6 +6,7 @@ import FooterSection from '../components/FooterSection';
 import TeamSection from '../components/TeamSection';
 
 const HomePages = () => {
+  document.title = 'Homepages';
   return (
     <div>
       <NavbarTop />
