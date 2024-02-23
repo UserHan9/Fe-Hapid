@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,22 @@ const AddUserForm = () => {
     jumlah_pemain: '',
   });
 
+  const [namaLomba, setNamaLomba] = useState('');
+
+  useEffect(() => {
+    // Fetch nama lomba dari API saat komponen dimuat
+    fetchNamaLomba();
+  }, []);
+
+  const fetchNamaLomba = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/lomba'); // Ubah URL dengan endpoint yang benar
+      setNamaLomba(response.data.nama_lomba);
+    } catch (error) {
+      console.error('Error fetching nama lomba:', error);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewUser({
@@ -24,9 +40,9 @@ const AddUserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/api/lomba/create', newUser);
+      await axios.post('http://127.0.0.1:8000/api/lomba/create', newUser); // Ubah URL dengan endpoint yang benar
       Swal.fire({
-        title: 'Selamat! anda baru saja mendaftarkan diri',
+        title: 'Selamat! Anda baru saja mendaftarkan diri',
         text: 'Pendaftaran Berhasil.',
         icon: 'success',
       });
@@ -54,7 +70,7 @@ const AddUserForm = () => {
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <label className="flex flex-col mb-1">
           <p className="text-[16px]">Nama Lomba:</p>
-          <input type="text" placeholder="Volly" name="nama_lomba" value={newUser.nama_lomba} onChange={handleInputChange} className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
+          <input type="text" value={namaLomba} readOnly className="border-green-500 border rounded-lg p-2 w-full max-w-96 placeholder:text-center text-[17px]" />
         </label>
         <label className="flex flex-col mb-1">
           <p className="text-[16px]">Nama Peserta:</p>
