@@ -47,6 +47,8 @@ const Login = () => {
       // Simpan token ke localStorage
       localStorage.setItem('token', token);
 
+      console.log('Token',token);
+
       console.log('Permissions:', permissions);
 
       toast.success('Keren!! Bisa Login 😎', {
