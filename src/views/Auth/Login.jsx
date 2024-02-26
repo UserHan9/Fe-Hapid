@@ -8,50 +8,31 @@ import toast from 'react-hot-toast';
 import Logo from '../../assets/images/Logo-Harmoni.png';
 
 const Login = () => {
-  // State hooks
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
 
-  // Navigation hook
-  const navigate = useNavigate();
-
-  // Effect hook untuk memeriksa token yang sudah ada
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      navigate('/'); // Sesuaikan rute jika diperlukan
-    }
-  }, [navigate]);
-
-  // Handler untuk proses login
-  const handleLogin = async () => {
+  const handleLogin = async (email, password) => {
     setLoading(true);
+    setErrors(null);
+
     setErrors(null); // Menghapus error sebelumnya
 
     try {
-      const response = await Api.post('/api/login', {
-        email,
-        password,
-      });
-
-      const { token, user, permissions, roles } = response.data;
+      const response = await Api.post('api/login', { email, password });
+      const { data, roles } = response.data;
 
       // Simpan token ke cookies
-      Cookies.set('token', token);
-      Cookies.set('user', JSON.stringify(user));
-      Cookies.set('permissions', JSON.stringify(permissions));
-      Cookies.set('role', roles && roles.length > 0 ? roles[0] : null);
+      Cookies.set('token', data.token);
 
-      // Simpan token ke localStorage
-      localStorage.setItem('token', token);
+      // Navigasi ke halaman sesuai peran user
+      if (roles.includes('admin')) {
+        navigate('/AdminDashboard');
+      } else {
+        navigate('/UserDashboard');
+      }
 
-      console.log('Token',token);
-
-      console.log('Permissions:', permissions);
-
-      toast.success('Keren!! Bisa Login 😎', {
+      toast.success('Login Succesfully!!🔥', {
         position: 'top-right',
         duration: 5000,
         style: {
@@ -63,25 +44,6 @@ const Login = () => {
           color: 'white',
         },
       });
-
-      const userRole = roles && roles.length > 0 ? roles[0] : null;
-
-      if (userRole) {
-        switch (userRole) {
-          case 'admin':
-            navigate('/AdminDashboard');
-            break;
-          case 'user':
-            navigate('/UserDashboard');
-            break;
-          default:
-            console.error('Peran tidak dikenali:', userRole);
-            navigate('/default-dashboard');
-        }
-      } else {
-        console.error('Tidak ada peran ditemukan dalam respons:', roles);
-        // Tangani jika tidak ada peran dalam respons
-      }
     } catch (error) {
       console.error('Kesalahan login:', error);
 
@@ -106,7 +68,14 @@ const Login = () => {
           </div>
         </div>
         <div className="p-4 flex flex-col justify-around">
-          <form className="max-w-md mx-auto">
+          <form
+            className="max-w-md mx-auto"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const formData = new FormData(e.target);
+              handleLogin(formData.get('email'), formData.get('password'));
+            }}
+          >
             <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
               Selamat Datang di Si-Meet <span className="text-gray-700 mt-2">Harmoni Tech</span>
             </h2>
@@ -118,7 +87,7 @@ const Login = () => {
                 <span className="md:w-6">
                   <FontAwesomeIcon icon={faEnvelope} />
                 </span>
-                <input id="email" type="text" className="form-control w-full border p-2 rounded-lg" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Masukkan Alamat Email" />
+                <input id="email" type="text" name="email" className="form-control w-full border p-2 rounded-lg" placeholder="Masukkan Alamat Email" />
               </div>
             </div>
             <div className="mb-4">
@@ -129,13 +98,13 @@ const Login = () => {
                 <span className="md:w-6">
                   <FontAwesomeIcon icon={faLock} />
                 </span>
-                <input id="password" type="password" className="form-control w-full border p-2 rounded-lg" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="off" placeholder="Masukkan Kata Sandi Anda" />
+                <input id="password" type="password" name="password" className="form-control w-full border p-2 rounded-lg" autoComplete="off" placeholder="Masukkan Kata Sandi Anda" />
               </div>
             </div>
-            <button onClick={handleLogin} className="w-full py-2 bg-green-400 hover:bg-green-800 rounded-md mb-4 text-[20px]" disabled={loading}>
+            <button type="submit" className="w-full py-2 bg-green-400 hover:bg-green-800 rounded-md mb-4 text-[20px]" disabled={loading}>
               {loading ? 'Sedang masuk, harap tunggu...' : 'Masuk'}
             </button>
-            {errors && <p className="text-red-500">{errors}</p>}
+            {errors && <p className="text-red-500 shrink-0 font-semibold p-0 m-0">{errors}</p>}
             {/* Tautan untuk kembali ke halaman utama */}
             <Link to="/">
               <p className="btn bg-green-400 text-gray-600 cursor-pointer px-2 text-[18px] font-semibold">

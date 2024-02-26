@@ -104,14 +104,14 @@ const DataLomba = () => {
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-              <td className="text-[18px] border text-center">{user.id}</td>
-                  <td className="text-[18px] border text-center">{user.nama_lomba}</td>
-                  <td className="text-[18px] border text-center">{user.nama_peserta}</td>
-                  <td className="text-[18px] border text-center">{user.nama_kelas}</td>
-                  <td className="text-[18px] border text-center">{user.jurusan}</td>
-                  <td className="text-[18px] border text-center">{user.kontak}</td>
-                  <td className="text-[18px] border text-center">{user.jumlah_pemain}</td>
-                  <td className="text-[18px] border text-center">
+                <td className="text-[18px] border text-center">{user.id}</td>
+                <td className="text-[18px] border text-center">{user.nama_kelas}</td>
+                <td className="text-[18px] border text-center">{user.jumlah_pemain}</td>
+                <td className="text-[18px] border text-center">{user.nama_peserta}</td>
+                <td className="text-[18px] border text-center">{user.jurusan}</td>
+                <td className="text-[18px] border text-center">{user.kontak}</td>
+                <td className="text-[18px] border text-center">{user.buat_lomba_id}</td>
+                <td className="text-[18px] border text-center">
                   <div className="flex">
                     <button className="mr-3 flex mb-2" onClick={() => handleEdit(user)}>
                       <CiEdit className="mr-1" />

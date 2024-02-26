@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Sidebar from '../components/Sidebar';
+import { useNavigate } from 'react-router-dom';
 import image from '../assets/images/Logo-Harmoni.png';
+
 const CreateUser = () => {
   const [user, setUser] = useState({ name: '', email: '', password: '', password_confirmation: '' });
+  let navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,6 +25,7 @@ const CreateUser = () => {
         icon: 'success',
       });
       setUser({ name: '', email: '', password: '', password_confirmation: '' });
+      navigate('/UserAccount'); // Navigate to UserAccount after successful creation
     } catch (error) {
       console.error(error);
       alert('Failed to create user. Please try again.');
