@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, Navigate } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DataKelas from '../pages/DataKelas.jsx';
 import DashboardPages from '../pages/DashboardPages.jsx';
@@ -17,6 +17,8 @@ import RiwayatDaftarUser from '../UserPages/RiwayatDaftarUser.jsx';
 import SaranUser from '../UserPages/SaranUser.jsx';
 import PostsLomba from '../pages/PostsLomba.jsx';
 import AddUserForm from '../components/AddUserForm.jsx';
+import UserAccount from '../pages/UserAccount.jsx';
+import ErrorPage from '../pages/404.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -40,6 +42,7 @@ export default function RoutesIndex() {
           <Suspense fallback={<Loader />}>
             <Homepages />
           </Suspense>
+          
         }
       />
       <Route
@@ -67,6 +70,7 @@ export default function RoutesIndex() {
       <Route path="/Pemenang" element={<Pemenang />} />
       <Route path="/Saran" element={<Saran />} />
       <Route path="/PostsLomba" element={<PostsLomba />} />
+      <Route path="/UserAccount" element={<UserAccount />} />
       <Route path="/RiwayatDaftar" element={<RiwayatDaftar />} />
       {/* Route untuk User */}
       <Route path="/DaftarLomba" element={<DaftarLombaUser />} />
@@ -78,6 +82,7 @@ export default function RoutesIndex() {
       <Route path="/PemenangUser" element={<PemenangUser />} />
       <Route path="/RiwayatUser" element={<RiwayatDaftarUser />} />
       <Route path="/SaranUser" element={<SaranUser />} />
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   );
 }
