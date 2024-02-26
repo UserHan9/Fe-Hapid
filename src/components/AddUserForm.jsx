@@ -10,7 +10,7 @@ const AddUserForm = () => {
     nama_peserta: '',
     jurusan: '',
     kontak: '',
-    buat_lomba_id: 1, // Sesuaikan dengan id lomba yang sedang berlangsung
+    buat_lomba_id: 3, // Sesuaikan dengan id lomba yang sedang berlangsung
   });
 
   const handleInputChange = (e) => {
