@@ -1,3 +1,4 @@
+// Import dependencies
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CiEdit } from 'react-icons/ci';
@@ -6,17 +7,21 @@ import Sidebar from '../components/Sidebar';
 import Swal from 'sweetalert2';
 import Edit from '../components/Edit';
 
+// Define DataLomba component
 const DataLomba = () => {
+  // State variables
   const [users, setUsers] = useState([]);
   const [editUser, setEditUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Fetch data on initial load and when currentPage changes
   useEffect(() => {
     fetchData();
   }, [currentPage]);
 
+  // Function to fetch data from backend
   const fetchData = async () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/lomba/show?page=${currentPage}`);
@@ -27,15 +32,18 @@ const DataLomba = () => {
     }
   };
 
+  // Function to handle page change
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
+  // Function to handle edit action
   const handleEdit = (user) => {
     setEditUser(user);
     setIsModalOpen(true);
   };
 
+  // Function to handle edit user
   const handleEditUser = async (editedUser) => {
     try {
       await axios.put(`http://127.0.0.1:8000/api/lomba/update/${editedUser.id}`, editedUser);
@@ -58,6 +66,7 @@ const DataLomba = () => {
     setEditUser(null);
   };
 
+  // Function to handle delete action
   const handleDelete = async (userId) => {
     try {
       const result = await Swal.fire({
@@ -83,11 +92,12 @@ const DataLomba = () => {
     }
   };
 
+  // Render component
   return (
     <div className="flex">
       <Sidebar />
       <div className="overflow-x-auto mx-auto my-8">
-        <h1 className="text-3xl font-bold mb-6 ml-3">Data Peserta - SI-Classmeet</h1>
+        <h1 className="text-3xl font-bold mb-6 ml-3">Data Hohoho - SI-Classmeet</h1>
         <table className="table w-full mt-10">
           <thead>
             <tr>
@@ -105,7 +115,7 @@ const DataLomba = () => {
             {users.map((user) => (
               <tr key={user.id}>
                 <td className="text-[18px] border text-center">{user.id}</td>
-                <td className="text-[18px] border text-center">{user.buat_lomba_id}</td>
+                <td className="text-[18px] border text-center">{user.nama_lomba}</td> {/* Change to user.nama_lomba */}
                 <td className="text-[18px] border text-center">{user.nama_peserta}</td>
                 <td className="text-[18px] border text-center">{user.nama_kelas}</td>
                 <td className="text-[18px] border text-center">{user.jurusan}</td>
@@ -140,4 +150,5 @@ const DataLomba = () => {
   );
 };
 
+// Export component
 export default DataLomba;
