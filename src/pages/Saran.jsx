@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Sidebar from '../components/Sidebar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Swal from 'sweetalert2';
 
 const Saran = () => {
   const [pesan, setPesan] = useState('');
@@ -28,7 +29,14 @@ const Saran = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setChats(response.data.messages.map((message, index) => ({ id: index, message, user_name: 'admin' })));
+      setChats(
+        response.data.messages.map((message) => ({
+          id: message.id,
+          user_id: message.user_id,
+          message: message.message,
+          user_name: 'admin',
+        }))
+      );
     } catch (error) {
       console.error('Error:', error);
       setError('Terjadi kesalahan');
@@ -61,38 +69,42 @@ const Saran = () => {
       );
 
       const newChat = {
-        id: response.data.id, // Anda perlu menyesuaikan ini dengan ID yang dikembalikan dari API
+        id: response.data.message.id,
+        user_id: response.data.message.user_id,
         message: pesan,
         user_name: response.data.user_name,
       };
 
-      setChats([...chats, newChat]);
+      setChats([newChat, ...chats]);
       setPesan('');
     } catch (error) {
       console.error('Error:', error);
-      setError('Terjadi kesalahan');
+      setError('Terjadi kesalahan, bisa jadi token anda habis, anda bisa coba untuk login kembali');
     }
   };
 
   const handleDelete = async (id) => {
     try {
-      const token = Cookies.get('token');
-      if (!token) {
-        setError('User tidak terautentikasi');
-        return;
-      }
-
-      await axios.delete(`http://127.0.0.1:8000/api/chats/${id}`, {
-        headers: {
-          Accept: 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+      const result = await Swal.fire({
+        title: 'Yakin Hapus?',
+        text: 'Data akan dihapus dari database',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Hapus saja!',
       });
-
-      setChats(chats.filter((chat) => chat.id !== id));
+      if (result.isConfirmed) {
+        await axios.delete(`http://127.0.0.1:8000/api/chats/${id}`);
+        fetchData();
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          icon: 'success',
+        });
+      }
     } catch (error) {
-      console.error('Error:', error);
-      setError('Terjadi kesalahan');
+      console.error('Error deleting user:', error);
     }
   };
 

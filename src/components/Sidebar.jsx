@@ -11,6 +11,7 @@ import { IoMailOpenOutline, IoPersonAdd } from 'react-icons/io5';
 import { PiMedalBold } from 'react-icons/pi';
 import { FaRegBell } from 'react-icons/fa6';
 import { PiBookOpenBold } from 'react-icons/pi';
+import NavbarComponent from './NavbarComponent';
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
@@ -95,6 +96,7 @@ const Sidebar = () => {
           ))}
         </ul>
       </div>
+      {/* <NavbarComponent /> */}
     </div>
   );
 };

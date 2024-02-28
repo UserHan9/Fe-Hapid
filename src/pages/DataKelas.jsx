@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Sidebar from '../components/Sidebar';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import image from '../assets/images/Logo-Harmoni.png';
 
 const CreateUser = () => {
@@ -38,7 +38,7 @@ const CreateUser = () => {
       <div className="px-3 mx-auto mt-20">
         <h1 className="text-3xl font-bold mb-6 ml-3 mt-5">Create-account - SI-Classmeet</h1>
         <div className="bg-green-100 shadow-xl rounded-md p-6 flex">
-          <img src={image} alt="" className="max-w-80" />
+          <img src={image} alt="" className="max-w-[350px]" />
           <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
             <div className="flex items-center">
               <label className="font-semibold text-[18px] flex-1">Name:</label>
@@ -59,6 +59,9 @@ const CreateUser = () => {
             <button type="submit" className="bg-green-300 px-5 py-3 rounded-md text-[18px] font-semibold mt-3">
               Create User
             </button>
+            <Link to="/UserAccount">
+              <p className="btn bg-green-400 text-gray-600 cursor-pointer px-2 text-[18px] font-semibold">Kembali Ke Halaman Data user</p>
+            </Link>
           </form>
         </div>
       </div>
