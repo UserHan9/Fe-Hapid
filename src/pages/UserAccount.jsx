@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import axios from 'axios';
 import { IoPersonAdd } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const UserAccount = () => {
   const [users, setUsers] = useState([]);
@@ -29,8 +30,24 @@ const UserAccount = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:8000/api/users/destroy/${id}`);
-      fetchData(); // Refresh data after deletion
+      const result = await Swal.fire({
+        title: 'Yakin Hapus?',
+        text: 'Data akan dihapus dari database',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, Hapus saja!',
+      });
+      if (result.isConfirmed) {
+        await axios.delete(`http://127.0.0.1:8000/api/users/destroy/${id}`);
+        fetchData();
+        Swal.fire({
+          title: 'Deleted!',
+          text: 'Your file has been deleted.',
+          icon: 'success',
+        });
+      }
     } catch (error) {
       console.error('Error deleting user:', error);
     }

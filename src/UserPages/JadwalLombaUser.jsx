@@ -32,7 +32,7 @@ const JadwalLombaUser = () => {
         </div>
         <div className="grid grid-cols-3 gap-4">
           {filteredJadwal.map((item) => (
-            <div key={item.id} className="border p-4 rounded-md ml-7 mt-5">
+            <div key={item.id} className="border p-4 ml-7 mt-5 bg-green-600 w-72 h-60 text-white text-[18px] font-semibold rounded-lg">
               <h2 className="font-bold mb-2 text-2xl">{item.nama_lomba}</h2>
               <p className="font-semibold">Tanggal: {item.tanggal}</p>
               <p>Waktu: {item.waktu}</p>
