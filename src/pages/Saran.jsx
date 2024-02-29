@@ -106,7 +106,8 @@ const Saran = () => {
     } catch (error) {
       console.error('Error deleting user:', error);
     }
-  };
+};
+
 
   return (
     <div className="flex">

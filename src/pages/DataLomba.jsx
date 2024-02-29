@@ -21,12 +21,26 @@ const DataLomba = () => {
     fetchData();
   }, [currentPage]);
 
+  const ambilData = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:8000/api/users?page=${currentPage}`);
+      setUsers(response.data.data);
+      setTotalPages(response.data.last_page);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  // Fetch data on initial load
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   // Function to fetch data from backend
   const fetchData = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/lomba/show');
-      setUserData(response.data.data);
-      setTotalPages(response.data.last_page);
+      setUserData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -87,11 +101,6 @@ const DataLomba = () => {
     }
   };
 
-  // Function to handle pagination
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
   // Render component
   return (
     <div className="flex">
@@ -115,7 +124,7 @@ const DataLomba = () => {
             {userData.map((user) => (
               <tr key={user.id}>
                 <td className="text-[18px] border text-center">{user.id}</td>
-                <td className="text-[18px] border text-center">{user.buat_lomba_id}</td>
+                <td className="text-[18px] border text-center">{user.nama_lomba}</td>
                 <td className="text-[18px] border text-center">{user.nama_peserta}</td>
                 <td className="text-[18px] border text-center">{user.nama_kelas}</td>
                 <td className="text-[18px] border text-center">{user.jurusan}</td>
@@ -138,12 +147,12 @@ const DataLomba = () => {
           </tbody>
         </table>
         <div className="flex justify-center items-center mt-5">
-          {Array.from({ length: totalPages }, (_, index) => (
-            <button key={index + 1} onClick={() => handlePageChange(index + 1)} className="font-semibold  mx-1 px-5 py-3 rounded-full bg-green-300">
-              {index + 1}
-            </button>
-          ))}
-        </div>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button key={index + 1} onClick={() => handlePageChange(index + 1)} className="font-semibold  mx-1 px-5 py-3 rounded-full bg-green-300">
+                {index + 1}
+              </button>
+            ))}
+          </div>
       </div>
       {isModalOpen && <Edit user={editUser} setIsModalOpen={setIsModalOpen} fetchData={fetchData} />}
     </div>

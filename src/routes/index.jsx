@@ -72,6 +72,7 @@ export default function RoutesIndex() {
       <Route path="/PostsLomba" element={<PostsLomba />} />
       <Route path="/UserAccount" element={<UserAccount />} />
       <Route path="/RiwayatDaftar" element={<RiwayatDaftar />} />
+      <Route path="/Posts" element={<PostsLomba />} />
       {/* Route untuk User */}
       <Route path="/DaftarLomba" element={<DaftarLombaUser />} />
       <Route path="/DashboardUser" element={<DashboardUser />} />

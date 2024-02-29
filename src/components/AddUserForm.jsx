@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
@@ -13,6 +13,22 @@ const AddUserForm = () => {
     buat_lomba_id: 3, // Sesuaikan dengan id lomba yang sedang berlangsung
   });
 
+  const [namaLomba, setNamaLomba] = useState('');
+
+  useEffect(() => {
+    // Fetch nama lomba dari API saat komponen dimuat
+    fetchNamaLomba();
+  }, []);
+
+  const fetchNamaLomba = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/lomba'); // Ubah URL dengan endpoint yang benar
+      setNamaLomba(response.data.nama_lomba);
+    } catch (error) {
+      console.error('Error fetching nama lomba:', error);
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setNewUser({
@@ -24,7 +40,7 @@ const AddUserForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://127.0.0.1:8000/api/lomba/create', newUser);
+      await axios.post('http://127.0.0.1:8000/api/lomba/create', newUser); // Ubah URL dengan endpoint yang benar
       Swal.fire({
         title: 'Sukses!',
         text: 'Pendaftaran berhasil.',

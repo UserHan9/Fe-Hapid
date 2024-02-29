@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Api from '../../Api';
 import Cookies from 'js-cookie';
-import { faEnvelope, faLock, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faArrowLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import toast from 'react-hot-toast';
 import Logo from '../../assets/images/Logo-Harmoni.png';
@@ -15,6 +15,8 @@ const Login = () => {
   const handleLogin = async (email, password) => {
     setLoading(true);
     setErrors(null);
+
+    setErrors(null); // Menghapus error sebelumnya
 
     try {
       const response = await Api.post('api/login', { email, password });
