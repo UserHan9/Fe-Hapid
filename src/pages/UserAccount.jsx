@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IoPersonAdd } from 'react-icons/io5';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Cookies from 'js-cookie';
 
 const UserAccount = () => {
   const [users, setUsers] = useState([]);
@@ -16,9 +17,18 @@ const UserAccount = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/users?page=${currentPage}`);
-      setUsers(response.data.data);
-      setTotalPages(response.data.last_page);
+      // Mendapatkan permissions dari cookies
+      const permissions = JSON.parse(Cookies.get('permissions'));
+
+      // Memeriksa apakah user memiliki permission users.index
+      if (permissions && permissions['users.index']) {
+        const response = await axios.get(`http://127.0.0.1:8000/api/users?page=${currentPage}`);
+        setUsers(response.data.data);
+        setTotalPages(response.data.last_page);
+      } else {
+        // Tampilkan pesan bahwa user tidak memiliki izin
+        console.error('User tidak memiliki izin untuk mengakses data pengguna');
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
     }
