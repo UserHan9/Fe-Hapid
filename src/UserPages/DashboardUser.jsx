@@ -4,8 +4,8 @@ import Layout from '../components/Layout';
 const DashboardUser = () => {
   return (
     <Layout>
-      <div className="hero mx-auto my-auto min-h-screen h-screen">
-        <div className="flex-col lg:flex-row-reverse w-full">
+      <div className="hero ">
+        <div className="flex-col lg:flex-row-reverse w-full mt-40">
           <div className="px-64">
             <h1 className="text-5xl font-bold">
               Halo User, Selamat datang di <span className="text-green-300">SIMEET</span>

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Api from '../../Api';
 import Cookies from 'js-cookie';
-import { faEnvelope, faLock, faArrowLeft, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import toast from 'react-hot-toast';
 import Logo from '../../assets/images/Logo-Harmoni.png';
@@ -16,20 +16,21 @@ const Login = () => {
     setLoading(true);
     setErrors(null);
 
-    setErrors(null); // Menghapus error sebelumnya
-
     try {
       const response = await Api.post('api/login', { email, password });
-      const { data, roles } = response.data;
+      const { data, roles, permissions } = response.data;
 
-      // Simpan token ke cookies
+      // Simpan token, user, dan permissions ke cookies
       Cookies.set('token', data.token);
-
+      Cookies.set('user', JSON.stringify(data.user));
+      Cookies.set('permissions', JSON.stringify(permissions));
+      console.log(data);
+      console.log(permissions);
       // Navigasi ke halaman sesuai peran user
       if (roles.includes('admin')) {
-        navigate('/AdminDashboard');
+        navigate('/DashboardPages');
       } else {
-        navigate('/UserDashboard');
+        navigate('/DashboardUser');
       }
 
       toast.success('Login Succesfully!!🔥', {

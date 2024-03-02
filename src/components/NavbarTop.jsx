@@ -32,21 +32,20 @@ const NavbarTop = () => {
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
             <li>
-              <div>Item 1</div>
+              <div>Home</div>
             </li>
             <li>
-              <div>Parent</div>
-              <ul className="p-2">
-                <li>
-                  <div>Submenu 1</div>
-                </li>
-                <li>
-                  <div>Submenu 2</div>
-                </li>
-              </ul>
+              <div>
+                <div>About</div>
+              </div>
             </li>
             <li>
-              <div>Item 3</div>
+              <div>
+                <div>Teams</div>
+              </div>
+            </li>
+            <li>
+              <div>Contact</div>
             </li>
           </ul>
         </div>
@@ -84,4 +83,3 @@ const NavbarTop = () => {
 };
 
 export default NavbarTop;
-  

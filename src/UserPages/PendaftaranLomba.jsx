@@ -23,7 +23,7 @@ const PendaftaranLomba = () => {
   return (
     <div className="flex">
       <SidebarUser />
-      <div className="flex justify-center items-center gap-5 w-[1200px] ml-10">
+      <div className="flex justify-center items-center gap-5 w-[1200px] ml-10 overflow-x-auto">
         {loading ? ( // Tampilkan skeleton loader jika loading masih true
           <>
             {[...Array(3)].map(

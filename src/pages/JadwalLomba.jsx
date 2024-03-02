@@ -4,6 +4,8 @@ import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 const JadwalLomba = () => {
   const [users, setUsers] = useState([]);
@@ -46,13 +48,28 @@ const JadwalLomba = () => {
   };
 
   const handleDelete = async (userId) => {
-    try {
-      await axios.delete(`http://127.0.0.1:8000/api/jadwal/destroy/${userId}`);
-      await fetchData();
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
+    Swal.fire({
+      title: 'Yakin ingin menghapus data?',
+      text: 'Data yang dihapus tidak dapat dikembalikan!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus!',
+      cancelButtonText: 'Tidak',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://127.0.0.1:8000/api/jadwal/destroy/${userId}`);
+          await fetchData();
+          Swal.fire('Deleted!', 'Data berhasil dihapus.', 'success');
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      }
+    });
   };
+  
 
   const handleAddUser = async (event) => {
     event.preventDefault();
