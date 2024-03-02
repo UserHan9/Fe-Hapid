@@ -19,9 +19,11 @@ const UserAccount = () => {
     try {
       // Mendapatkan permissions dari cookies
       const permissions = JSON.parse(Cookies.get('permissions'));
-
+  
+      console.log('Permissions:', permissions); // Tambahkan ini untuk memeriksa nilai permissions
+  
       // Memeriksa apakah user memiliki permission users.index
-      if (permissions && permissions['users.index']) {
+      if (permissions && permissions.includes('users.create')) {
         const response = await axios.get(`http://127.0.0.1:8000/api/users?page=${currentPage}`);
         setUsers(response.data.data);
         setTotalPages(response.data.last_page);
@@ -33,7 +35,6 @@ const UserAccount = () => {
       console.error('Error fetching data:', error);
     }
   };
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };

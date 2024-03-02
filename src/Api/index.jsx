@@ -16,11 +16,11 @@ const Api = axios.create({
 // Handle unauthenticated and forbidden responses
 Api.interceptors.response.use(
   function (response) {
-    // If response is successful, return it
+   
     return response;
   },
   function (error) {
-    // Check if response is unauthenticated (401)
+  
     if (401 === error.response.status) {
       // Remove token from cookies
       Cookies.remove('token');  
@@ -31,9 +31,8 @@ Api.interceptors.response.use(
       // Redirect to "/"
       window.location = '/';
     } 
-    // Check if response is forbidden (403)
+ 
     else if (403 === error.response.status) {
-      // Redirect to "/forbidden"
       window.location = '/forbidden';
     } 
     // For other errors, reject the promise

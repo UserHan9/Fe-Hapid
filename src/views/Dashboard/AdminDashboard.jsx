@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
+import Cookies from 'js-cookie';
 
 const AdminDashboard = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Mendapatkan nilai peran dari cookie
+    const role = Cookies.get('role');
+    // Periksa apakah pengguna memiliki peran admin
+    setIsAdmin(role && JSON.parse(role).includes('admin')); // Mengubah kondisi di sini
+    
+    console.log('Role:', role); // Tambahkan console log di sini
+  }, []);
+
+  if (!isAdmin) {
+    return <div>Anda tidak memiliki izin untuk mengakses halaman ini.</div>;
+  }
+
   return (
     <div className="flex">
       <Sidebar />

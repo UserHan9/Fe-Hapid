@@ -18,32 +18,37 @@ const Login = () => {
 
     try {
       const response = await Api.post('api/login', { email, password });
-      const { data, roles, permissions } = response.data;
+      const { success, id, name, email: userEmail, roles, permissions, token } = response.data;
 
-      // Simpan token, user, dan permissions ke cookies
-      Cookies.set('token', data.token);
-      Cookies.set('user', JSON.stringify(data.user));
-      Cookies.set('permissions', JSON.stringify(permissions));
-      
-      // Navigasi ke halaman sesuai peran user
-      if (roles.includes('admin')) {
-        navigate('/AdminDashboard');
+      if (success) {
+        // Simpan token, user, permissions, dan role ke cookies
+        Cookies.set('token', token);
+        Cookies.set('user', JSON.stringify({ id, name, email: userEmail, roles }));
+        Cookies.set('permissions', JSON.stringify(permissions));
+        Cookies.set('role', JSON.stringify(roles)); // Menyimpan peran ke cookie
+
+        // Navigasi ke halaman sesuai peran user
+        if (roles.includes('admin')) {
+          navigate('/AdminDashboard');
+        } else {
+          navigate('/DashboardUser');
+        }
+
+        toast.success('Login Succesfully!!🔥', {
+          position: 'top-right',
+          duration: 5000,
+          style: {
+            borderRadius: '0.5rem',
+            backgroundColor: '#10B981', // Warna hijau
+            padding: '1rem',
+            fontSize: '1.2rem',
+            fontWeight: 'bold',
+            color: 'white',
+          },
+        });
       } else {
-        navigate('/UserDashboard');
+        setErrors('Login failed. Please try again.');
       }
-
-      toast.success('Login Succesfully!!🔥', {
-        position: 'top-right',
-        duration: 5000,
-        style: {
-          borderRadius: '0.5rem',
-          backgroundColor: '#10B981', // Warna hijau
-          padding: '1rem',
-          fontSize: '1.2rem',
-          fontWeight: 'bold',
-          color: 'white',
-        },
-      });
     } catch (error) {
       console.error('Kesalahan login:', error);
 
