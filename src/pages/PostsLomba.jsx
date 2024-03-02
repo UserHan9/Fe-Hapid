@@ -1,60 +1,68 @@
-import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
+import React, { useState, useEffect } from 'react';
+import SidebarUser from '../components/SidebarUser';
 import axios from 'axios';
-import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
-const PostsLomba = () => {
-  const [namaPJ, setNamaPJ] = useState('');
-  const [namaLomba, setNamaLomba] = useState('');
-  const [kontak, setKontak] = useState('');
-  const [image, setImage] = useState(null);
+const PendaftaranLomba = () => {
+  const [dataLomba, setDataLomba] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedLomba, setSelectedLomba] = useState('');
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('nama_lomba', namaLomba);
-    formData.append('nama_pj', namaPJ);
-    formData.append('kontak', kontak);
-    formData.append('image', image);
-
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/buat-lomba', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(response.data);
-      Swal.fire('Success', 'Data lomba telah berhasil dibuat', 'success');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/buat-lomba/show');
+        setDataLomba(response.data.data); // Mengambil array data dari respons
+        setLoading(false); // Set loading menjadi false setelah data diambil
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="flex">
-      <Sidebar />
-      <div className="px-32 py-20 mx-5">
-        <h1 className="text-3xl font-bold mb-6 ml-3">Posts Lomba - Create Lomba Untuk Peserta</h1>
-        <form onSubmit={handleSubmit} className="px-2">
-          <p className="text-[20px] mb-2">Masukan Nama PJ</p>
-          <input type="text" className="bg-green-100 rounded-md px-9 py-4 text-[19px] border" placeholder="Nama PJ" value={namaPJ} onChange={(e) => setNamaPJ(e.target.value)} />
-          <p className="text-[20px] mb-2">Masukan Nama Lomba</p>
-          <input type="text" className="bg-green-100 rounded-md px-9 py-4 text-[19px] border" placeholder="Nama Lomba" value={namaLomba} onChange={(e) => setNamaLomba(e.target.value)} />
-          <div className="mb-3">
-            <p className="text-[20px] mb-2">Masukan No Contact</p>
-            <input className="bg-green-200 rounded-md px-9 py-4 text-[19px]" type="text" placeholder="Kontak" value={kontak} onChange={(e) => setKontak(e.target.value)} />
-          </div>
-          <div className="mb-3">
-            <p className="text-[20px] mb-2">Masukan image : </p>
-            <input type="file" className="file-input file-input-bordered file-input-success w-full max-w-xs text-[19px]" onChange={(e) => setImage(e.target.files[0])} />
-          </div>
-          <button type="submit" className="bg-green-300 px-5 py-3 rounded-md text-[18px]">
-            Submit
-          </button>
-        </form>
+      <SidebarUser />
+      <div className="flex justify-center items-center gap-5 w-[1200px] ml-10 overflow-x-auto">
+        {loading ? ( // Tampilkan skeleton loader jika loading masih true
+          <>
+            {[...Array(3)].map(
+              (
+                _,
+                index // Ubah angka sesuai dengan jumlah data yang akan ditampilkan
+              ) => (
+                <div key={index} className="flex flex-col gap-x-10 gap-10 w-52">
+                  <div className="skeleton h-32 w-full"></div>
+                  <div className="skeleton h-4 w-28"></div>
+                  <div className="skeleton h-4 w-full"></div>
+                  <div className="skeleton h-4 w-full"></div>
+                </div>
+              )
+            )}
+          </>
+        ) : (
+          dataLomba.map((lomba) => (
+            <div key={lomba.id} className="card w-[500px] bg-base-200 shadow-xl h-[400px]" onClick={() => setSelectedLomba(lomba.nama_lomba)}>
+              <figure className="px-2 pt-10">
+                <img src={`http://127.0.0.1:8000/storage/post_img/${lomba.image}`} alt="Lomba-image" className="rounded-xl" />
+              </figure>
+              <div className="card-body items-center text-center">
+                <h2 className="card-title">PJ : {lomba.nama_pj}</h2>
+                <h3 className="text-[18px] font-semibold">Lomba : {lomba.nama_lomba}</h3>
+                <p className="font-semibold">Kontak : {lomba.kontak}</p>
+                <div className="card-actions">
+                  <Link to="/MendaftarLomba">
+                    <button className="btn btn-primary mt-2">Daftar</button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
 };
 
-export default PostsLomba;
+export default PendaftaranLomba;

@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Sidebar from '../components/SidebarUser';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import SidebarUser from '../components/SidebarUser';
+import SidebarUser from '../components/SidebarUser'; // Hapus salah satu impor ini jika tidak diperlukan
 
 const Saran = () => {
   const [pesan, setPesan] = useState('');
   const [chats, setChats] = useState([]);
   const [error, setError] = useState(null);
   const chatContainerRef = useRef(null);
-
   useEffect(() => {
     fetchData();
   }, []);
@@ -29,7 +27,7 @@ const Saran = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      setChats(response.data.messages.map((message, index) => ({ id: index, message, user_name: 'admin' })));
+      setChats(response.data.messages);
     } catch (error) {
       console.error('Error:', error);
       setError('Terjadi kesalahan');
@@ -64,7 +62,10 @@ const Saran = () => {
       const newChat = {
         id: response.data.id, // Anda perlu menyesuaikan ini dengan ID yang dikembalikan dari API
         message: pesan,
-        user_name: response.data.user_name,
+        user_id: response.data.user_id,
+        created_at: response.data.created_at,
+        updated_at: response.data.updated_at,
+        user_name: 'user',
       };
 
       setChats([...chats, newChat]);
@@ -78,25 +79,46 @@ const Saran = () => {
   return (
     <div className="flex">
       <SidebarUser />
-      <div className="flex-1 flex flex-col justify-between p-4 bg-green-100">
-        <div className="overflow-y-auto max-h-[600px] mb-4" ref={chatContainerRef}>
-          {chats.map((chat, index) => (
-            <div className=" flex justify-end mb-2" key={index}>
-              <div></div>
-              <div className="bg-red-200 rounded-lg p-2 w-full max-w-96">
-                <p className="text-sm">{chat.user_name}</p>
-                <p>{chat.message}</p>
-              </div>
-            </div>
-          ))}
+      <div className="container pt-10 lg:flex lg:flex-row lg:gap-x-3">
+        <div className="max-w-4xl justify-center mx-auto lg:w-1/2">
+          <p className="text-lg font-bold ml-10 ">Masukan Saran :</p>
+          <div className="mb-6 lg:mt-5">
+            <label htmlFor="saran" className="block mb-2 text-lg font-medium text-gray-900 ml-10 ">
+              Saran :
+            </label>
+            <textarea id="saran" rows="4" name="saran" className=" ml-10 block p-2.5 w-96 text-sm text-gray-900 bg-gray-50 rounded-lg border " placeholder="Masukan saran yang membangun..." value={pesan} onChange={handleChange}></textarea>
+            <button onClick={handleSubmit} className="text-white bg-blue-700 hover:bg-blue-800 mt-2 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ml-10 ">
+              Submit
+            </button>
+          </div>
         </div>
-        <form onSubmit={handleSubmit} className="flex">
-          <input type="text" placeholder="Type here" className="flex-1 border p-2" value={pesan} onChange={handleChange} />
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 ml-2">
-            Kirim
-          </button>
-        </form>
-        {error && <p>{error}</p>}
+        <div className="overflow-y-auto h-[600px] sm:rounded-lg mx-auto items-center lg:w-1/2 p-5" ref={chatContainerRef}>
+          <h1 className="font-semibold mb-10 text-2xl">Pesan yang telah dikirim : </h1>
+          <table className="min-w-full divide-y divide-gray-200">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  No
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Pengirim
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Pesan
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {chats.map((chat, index) => (
+                <tr key={chat.id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                  <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{chat.user_name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{chat.message}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

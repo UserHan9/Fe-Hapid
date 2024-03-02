@@ -1,7 +1,24 @@
+import { useState, useEffect } from 'react';
 import React from 'react';
 import Sidebar from '../components/Sidebar';
+import Cookies from 'js-cookie';
 
 const DashboardPages = () => {
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    // Mendapatkan nilai peran dari cookie
+    const role = Cookies.get('role');
+    // Periksa apakah pengguna memiliki peran admin
+    setIsAdmin(role && JSON.parse(role).includes('admin')); // Mengubah kondisi di sini
+    
+    console.log('Role:', role); // Tambahkan console log di sini
+  }, []);
+
+  if (!isAdmin) {
+    return <div>Anda tidak memiliki izin untuk mengakses halaman ini.</div>;
+  }
+
   const totalRegistrants = 3;
   const totalWinners = 1;
   const TotalPertandingan = 4;

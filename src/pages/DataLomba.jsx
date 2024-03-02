@@ -16,30 +16,17 @@ const DataLomba = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  // Fetch data on initial load and when currentPage changes
   useEffect(() => {
     fetchData();
   }, [currentPage]);
-
-  const ambilData = async () => {
-    try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/users?page=${currentPage}`);
-      setUsers(response.data.data);
-      setTotalPages(response.data.last_page);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  // Fetch data on initial load
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   // Function to fetch data from backend
   const fetchData = async () => {
     try {
       const response = await axios.get('http://127.0.0.1:8000/api/lomba/show');
-      setUserData(response.data);
+      setUserData(response.data.data);
+      setTotalPages(response.data.last_page);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -100,12 +87,17 @@ const DataLomba = () => {
     }
   };
 
+  // Function to handle pagination
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   // Render component
   return (
     <div className="flex">
       <Sidebar />
       <div className="overflow-x-auto mx-auto my-8">
-        <h1 className="text-3xl font-bold mb-6 ml-3">Data Hohoho - SI-Classmeet</h1>
+        <h1 className="text-3xl font-bold mb-6 ml-3">Data Lomba - SI-Classmeet</h1>
         <table className="table w-full mt-10">
           <thead>
             <tr>
@@ -146,12 +138,12 @@ const DataLomba = () => {
           </tbody>
         </table>
         <div className="flex justify-center items-center mt-5">
-            {Array.from({ length: totalPages }, (_, index) => (
-              <button key={index + 1} onClick={() => handlePageChange(index + 1)} className="font-semibold  mx-1 px-5 py-3 rounded-full bg-green-300">
-                {index + 1}
-              </button>
-            ))}
-          </div>
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button key={index + 1} onClick={() => handlePageChange(index + 1)} className="font-semibold  mx-1 px-5 py-3 rounded-full bg-green-300">
+              {index + 1}
+            </button>
+          ))}
+        </div>
       </div>
       {isModalOpen && <Edit user={editUser} setIsModalOpen={setIsModalOpen} fetchData={fetchData} />}
     </div>

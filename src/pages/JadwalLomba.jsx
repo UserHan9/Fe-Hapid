@@ -4,6 +4,8 @@ import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
+import Swal from 'sweetalert2';
+import toast from 'react-hot-toast';
 
 const JadwalLomba = () => {
   const [users, setUsers] = useState([]);
@@ -46,13 +48,28 @@ const JadwalLomba = () => {
   };
 
   const handleDelete = async (userId) => {
-    try {
-      await axios.delete(`http://127.0.0.1:8000/api/jadwal/destroy/${userId}`);
-      await fetchData();
-    } catch (error) {
-      console.error('Error deleting user:', error);
-    }
+    Swal.fire({
+      title: 'Yakin ingin menghapus data?',
+      text: 'Data yang dihapus tidak dapat dikembalikan!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ya, hapus!',
+      cancelButtonText: 'Tidak',
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`http://127.0.0.1:8000/api/jadwal/destroy/${userId}`);
+          await fetchData();
+          Swal.fire('Deleted!', 'Data berhasil dihapus.', 'success');
+        } catch (error) {
+          console.error('Error deleting user:', error);
+        }
+      }
+    });
   };
+  
 
   const handleAddUser = async (event) => {
     event.preventDefault();
@@ -60,6 +77,13 @@ const JadwalLomba = () => {
     try {
       await axios.post('http://127.0.0.1:8000/api/jadwal/create', newUser);
       await fetchData();
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500,
+      });
       setNewUser({ nama_lomba: '', tempat: '', kelas: '', tanggal: '', waktu: '', keterangan: '' });
       setIsModalOpen(false);
     } catch (error) {
@@ -94,9 +118,9 @@ const JadwalLomba = () => {
           <FaSearch className="mx-3" />
           <input type="text" placeholder="Cari Nama Lomba" className="border rounded p-2 mr-2" value={searchTerm} onChange={handleSearch} />
         </div>
-        <table className="table w-full mt-10 ml-3">
+        <table className="table w-full mt-10 ml-5">
           <thead>
-            <tr>
+            <tr className="font-extrabold">
               <th className="text-[23px] text-center">ID</th>
               <th className="text-[23px] text-center">Nama Lomba</th>
               <th className="text-[23px] text-center">Tempat</th>
@@ -107,7 +131,7 @@ const JadwalLomba = () => {
               <th className="text-[23px] text-center">Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="font-semibold">
             {filteredUsers.map((user) => (
               <tr key={user.id}>
                 <td className="text-[18px] border text-center">{user.id}</td>
@@ -134,8 +158,8 @@ const JadwalLomba = () => {
           </tbody>
         </table>
         <div className="flex justify-between items-center mt-5">
-          <button className="btn ml-3" onClick={() => setIsModalOpen(true)}>
-            Tambah Peserta
+          <button className="btn ml-5 text-[18px]" onClick={() => setIsModalOpen(true)}>
+            Tambah Jadwal
           </button>
         </div>
         {isModalOpen && (
@@ -144,7 +168,12 @@ const JadwalLomba = () => {
               <h3 className="font-bold text-lg mb-4">Tambah Peserta Baru</h3>
               <form onSubmit={selectedUserId ? handleUpdate : handleAddUser}>
                 <label className="block mb-2">Nama Lomba:</label>
-                <input type="text" value={newUser.nama_lomba} onChange={(e) => setNewUser({ ...newUser, nama_lomba: e.target.value })} className="w-full mb-4 p-2 border" />
+                <select value={newUser.nama_lomba} onChange={(e) => setNewUser({ ...newUser, nama_lomba: e.target.value })} className="w-full mb-4 p-2 border">
+                  <option value="">Pilih Nama Lomba</option>
+                  <option value="Futsal">Futsal</option>
+                  <option value="Volly">Volly</option>
+                  <option value="Handball">Handball</option>
+                </select>
                 <label className="block mb-2">Tempat:</label>
                 <select value={newUser.tempat} onChange={(e) => setNewUser({ ...newUser, tempat: e.target.value })} className="w-full mb-4 p-2 border">
                   <option value="">Pilih Tempat</option>

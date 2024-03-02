@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { TbBinaryTree } from 'react-icons/tb';
-import { MdOutlineDashboard } from 'react-icons/md';
+import { MdOutlineDashboard, MdSchedule } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import { FaClipboardList } from 'react-icons/fa';
 import { BsBrowserEdge } from 'react-icons/bs';
 import Api from '../Api'; // Sesuaikan dengan path ke file API Anda
 import Cookies from 'js-cookie';
@@ -63,8 +64,8 @@ const SidebarUser = () => {
   const Menus = [
     { title: 'Dashboard', icon: <MdOutlineDashboard />, path: '/DashboardUser' },
     { title: 'Profile', icon: <BsBrowserEdge />, path: '/ProfileDashboard' },
-    { title: 'Daftar-Lomba', path: '/PendaftarLomba', spacing: true },
-    { title: 'Jadwal-Lomba', path: '/JadwalLombaUser' },
+    { title: 'Daftar-Lomba', icon: <FaClipboardList />, path: '/PendaftarLomba', spacing: true },
+    { title: 'Jadwal-Lomba', icon : <MdSchedule />, path: '/JadwalLombaUser' },
     { title: 'Pemenang', path: '/PemenangUser' },
     { title: 'Kotak-Saran', spacing: true, path: '/SaranUser' },
     { title: 'Riwayat Daftar', path: '/RiwayatUser' },
@@ -77,14 +78,13 @@ const SidebarUser = () => {
 
   return (
     <div className="flex">
+      {/* <NavbarComponent /> */}
       <div className={`bg-dark-purple h-screen p-5 pt-8 ${open ? 'w-72' : 'w-20'} duration-300 relative`}>
         <BsArrowLeftCircle className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${!open && 'rotate-180'}`} onClick={() => setOpen(!open)} />
-
         <div className="inline-flex">
           <TbBinaryTree className={`bg-amber-300 text-4xl rounded cursor-pointer block float-left mr-2 duration-500 ${open && 'rotate-[360deg]'}`} />
           <h1 className={`text-white origin-left font-medium text-2xl duration-300 ${!open && 'scale-0'}`}>SIMEET</h1>
         </div>
-
         <ul className="pt-2">
           {Menus.map((menu, index) => (
             <li

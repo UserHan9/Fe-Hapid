@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import Sidebar from '../components/Sidebar';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Swal from 'sweetalert2';
+import Sidebar from '../components/Sidebar'; // Menggunakan Sidebar
 
 const Saran = () => {
   const [pesan, setPesan] = useState('');
@@ -106,27 +106,37 @@ const Saran = () => {
     } catch (error) {
       console.error('Error deleting user:', error);
     }
-};
-
+  };
 
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex-1 flex flex-col justify-between p-4 bg-green-100">
+      <div className="flex-1 flex flex-col justify-between p-4">
         <div className="overflow-y-auto max-h-[600px] mb-4" ref={chatContainerRef}>
-          {chats.map((chat) => (
-            <div className="flex justify-end mb-2" key={chat.id}>
-              <div>
-                <button onClick={() => handleDelete(chat.id)} className="bg-red-500 text-white px-2 rounded-full">
-                  X
-                </button>
-              </div>
-              <div className="bg-red-200 rounded-lg p-2 w-full max-w-96">
-                <p className="text-sm">{chat.user_name}</p>
-                <p>{chat.message}</p>
-              </div>
-            </div>
-          ))}
+          <table className="table-auto w-full">
+            <thead>
+              <tr>
+                <th className="px-4 py-2 text-center">No</th>
+                {/* <th className="px-4 py-2 text-center">Pengirim</th> */}
+                <th className="px-4 py-2 text-center">Pesan</th>
+                <th className="px-4 py-2 text-center">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {chats.map((chat, index) => (
+                <tr key={chat.id}>
+                  <td className="border px-4 py-2 text-center">{index + 1}</td>
+                  {/* <td className="border px-4 py-2 text-center">{chat.user_name}</td> */}
+                  <td className="border px-4 py-2 text-center">{chat.message}</td>
+                  <td className="border px-4 py-2 text-center">
+                    <button onClick={() => handleDelete(chat.id)} className="bg-red-500 text-white px-2 rounded-full">
+                      Hapus
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
         <form onSubmit={handleSubmit} className="flex">
           <input type="text" placeholder="Type here" className="flex-1 border p-2" value={pesan} onChange={handleChange} />
@@ -141,3 +151,4 @@ const Saran = () => {
 };
 
 export default Saran;
+

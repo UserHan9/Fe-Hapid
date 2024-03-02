@@ -4,6 +4,7 @@ import HeroSection from '../components/HeroSection';
 import AboutSection from '../components/AboutSection';
 import FooterSection from '../components/FooterSection';
 import TeamSection from '../components/TeamSection';
+import CardComponent from '../components/CardComponent';
 
 const HomePages = () => {
   document.title = 'Homepages';
@@ -12,6 +13,7 @@ const HomePages = () => {
       <NavbarTop />
       <HeroSection />
       <AboutSection />
+      <CardComponent />
       <TeamSection />
       <FooterSection />
     </div>
