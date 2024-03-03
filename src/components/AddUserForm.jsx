@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const MendaftarLomba = () => {
+  const { id } = useParams(); // Mengambil ID Lomba dari URL
   const [formData, setFormData] = useState({
     nama_peserta: '',
     nama_kelas: '',
@@ -18,7 +20,7 @@ const MendaftarLomba = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://127.0.0.1:8000/api/lomba/create', formData);
+      const response = await axios.post(`http://127.0.0.1:8000/api/lomba/create`, { ...formData, buat_lomba_id: id });
       alert('Data berhasil disimpan');
       console.log(response.data);
     } catch (error) {

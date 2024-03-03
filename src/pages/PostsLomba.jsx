@@ -1,68 +1,78 @@
-import React, { useState, useEffect } from 'react';
-import SidebarUser from '../components/SidebarUser';
+import React, { useState } from 'react';
+import Sidebar from '../components/Sidebar';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-const PendaftaranLomba = () => {
-  const [dataLomba, setDataLomba] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedLomba, setSelectedLomba] = useState('');
+const PostsLomba = () => {
+  const [namaLomba, setNamaLomba] = useState('');
+  const [namaPJ, setNamaPJ] = useState('');
+  const [kontak, setKontak] = useState('');
+  const [image, setImage] = useState(null);
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/buat-lomba/show');
-        setDataLomba(response.data.data); // Mengambil array data dari respons
-        setLoading(false); // Set loading menjadi false setelah data diambil
-      } catch (error) {
-        console.error(error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('nama_pj', namaPJ);
+    formData.append('kontak', kontak);
+    formData.append('nama_lomba', namaLomba);
+
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/buat-lomba', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      const data = response.data;
+      if (data.status) {
+        setMessage(data.message);
+        setNamaLomba('');
+        setNamaPJ('');
+        setKontak('');
+        setImage(null);
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Data Lomba Berhasil Disimpan',
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
-    };
-    fetchData();
-  }, []);
+    } catch (error) {
+      console.error('Error submitting data:', error);
+    }
+  };
 
   return (
     <div className="flex">
-      <SidebarUser />
-      <div className="flex justify-center items-center gap-5 w-[1200px] ml-10 overflow-x-auto">
-        {loading ? ( // Tampilkan skeleton loader jika loading masih true
-          <>
-            {[...Array(3)].map(
-              (
-                _,
-                index // Ubah angka sesuai dengan jumlah data yang akan ditampilkan
-              ) => (
-                <div key={index} className="flex flex-col gap-x-10 gap-10 w-52">
-                  <div className="skeleton h-32 w-full"></div>
-                  <div className="skeleton h-4 w-28"></div>
-                  <div className="skeleton h-4 w-full"></div>
-                  <div className="skeleton h-4 w-full"></div>
-                </div>
-              )
-            )}
-          </>
-        ) : (
-          dataLomba.map((lomba) => (
-            <div key={lomba.id} className="card w-[500px] bg-base-200 shadow-xl h-[400px]" onClick={() => setSelectedLomba(lomba.nama_lomba)}>
-              <figure className="px-2 pt-10">
-                <img src={`http://127.0.0.1:8000/storage/post_img/${lomba.image}`} alt="Lomba-image" className="rounded-xl" />
-              </figure>
-              <div className="card-body items-center text-center">
-                <h2 className="card-title">PJ : {lomba.nama_pj}</h2>
-                <h3 className="text-[18px] font-semibold">Lomba : {lomba.nama_lomba}</h3>
-                <p className="font-semibold">Kontak : {lomba.kontak}</p>
-                <div className="card-actions">
-                  <Link to="/MendaftarLomba">
-                    <button className="btn btn-primary mt-2">Daftar</button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          ))
-        )}
+      <Sidebar />
+      <div className="px-32 py-14 mx-2">
+        <h1 className="text-3xl font-bold mb-6 ml-3">Posts Lomba - Create Lomba Untuk Peserta</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <p className="text-2xl mb-2">Masukan Nama Lomba</p>
+            <input type="text" value={namaLomba} onChange={(e) => setNamaLomba(e.target.value)} className="bg-green-100 rounded-md px-9 py-4 text-[19px] border" placeholder="Nama Lomba" />
+          </div>
+          <div className="mb-3">
+            <p className="text-2xl mb-2">Masukan Nama PJ</p>
+            <input type="text" className="bg-green-100 rounded-md px-9 py-4 text-[19px] border" placeholder="Nama PJ" value={namaPJ} onChange={(e) => setNamaPJ(e.target.value)} />
+          </div>
+          <div className="mb-3">
+            <p className="text-2xl mb-2">Kontak</p>
+            <input type="text" className="bg-green-100 rounded-md px-9 py-4 text-[19px] border" placeholder="Kontak" value={kontak} onChange={(e) => setKontak(e.target.value)} />
+          </div>
+          <div className="mb-5">
+            <p className="text-2xl mb-2">Masukan image : </p>
+            <input type="file" className="file-input file-input-bordered file-input-success w-full max-w-xs text-[19px]" onChange={(e) => setImage(e.target.files[0])} />
+          </div>
+          <button type="submit" className="bg-green-300 px-5 py-3 rounded-md text-[18px]">
+            Submit
+          </button>
+        </form>
       </div>
     </div>
   );
 };
 
-export default PendaftaranLomba;
+export default PostsLomba;

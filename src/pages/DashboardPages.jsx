@@ -11,11 +11,11 @@ const DashboardPages = () => {
 
   useEffect(() => {
     // Mendapatkan nilai peran dari cookie
-    const role = Cookies.get('role');
+    const roles = Cookies.get('roles');
     // Periksa apakah pengguna memiliki peran admin
-    setIsAdmin(role && JSON.parse(role).includes('admin')); // Mengubah kondisi di sini
+    setIsAdmin(roles && JSON.parse(roles).includes('admin')); // Mengubah kondisi di sini
     
-    console.log('Role:', role); // Tambahkan console log di sini
+    console.log('Role:', roles); // Tambahkan console log di sini
   }, []);
 
   if (!isAdmin) {     

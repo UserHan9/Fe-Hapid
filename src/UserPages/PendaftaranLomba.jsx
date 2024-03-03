@@ -24,21 +24,16 @@ const PendaftaranLomba = () => {
     <div className="flex">
       <SidebarUser />
       <div className="flex justify-center items-center gap-5 w-[1200px] ml-10 overflow-x-auto">
-        {loading ? ( // Tampilkan skeleton loader jika loading masih true
+        {loading ? (
           <>
-            {[...Array(3)].map(
-              (
-                _,
-                index // Ubah angka sesuai dengan jumlah data yang akan ditampilkan
-              ) => (
-                <div key={index} className="flex flex-col gap-x-10 gap-10 w-52">
-                  <div className="skeleton h-32 w-full"></div>
-                  <div className="skeleton h-4 w-28"></div>
-                  <div className="skeleton h-4 w-full"></div>
-                  <div className="skeleton h-4 w-full"></div>
-                </div>
-              )
-            )}
+            {[...Array(3)].map((_, index) => (
+              <div key={index} className="flex flex-col gap-x-10 gap-10 w-52">
+                <div className="skeleton h-32 w-full"></div>
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-full"></div>
+                <div className="skeleton h-4 w-full"></div>
+              </div>
+            ))}
           </>
         ) : (
           dataLomba.map((lomba) => (
@@ -51,7 +46,9 @@ const PendaftaranLomba = () => {
                 <h3 className="text-[18px] font-semibold">Lomba : {lomba.nama_lomba}</h3>
                 <p className="font-semibold">Kontak : {lomba.kontak}</p>
                 <div className="card-actions">
-                  <Link to="/MendaftarLomba">
+                  <Link to={`/MendaftarLomba/${lomba.id}`}>
+                    {' '}
+                    // Menggunakan ID Lomba dalam URL
                     <button className="btn btn-primary mt-2">Daftar</button>
                   </Link>
                 </div>
