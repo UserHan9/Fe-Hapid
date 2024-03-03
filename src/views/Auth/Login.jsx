@@ -18,14 +18,22 @@ const Login = () => {
 
     try {
       const response = await Api.post('api/login', { email, password });
-      const { success, id, name, email: userEmail, roles, permissions, token } = response.data;
+      const { success, id, name, email: userEmail, roles, permissions } = response.data;
 
       if (success) {
         // Simpan token, user, permissions, dan role ke cookies
+        const token = response.data.token;
         Cookies.set('token', token);
         Cookies.set('user', JSON.stringify({ id, name, email: userEmail, roles }));
         Cookies.set('permissions', JSON.stringify(permissions));
-        Cookies.set('role', JSON.stringify(roles)); // Menyimpan peran ke cookie
+        Cookies.set('roles', JSON.stringify(roles));
+        console.log(token);
+        console.log(response.data);
+        // Simpan token, user, permissions, dan role ke local storage
+        localStorage.setItem('token', token);
+        localStorage.setItem('user', JSON.stringify({ id, name, email: userEmail, roles }));
+        localStorage.setItem('permissions', JSON.stringify(permissions));
+        localStorage.setItem('roles', JSON.stringify(roles));
 
         // Navigasi ke halaman sesuai peran user
         if (roles.includes('admin')) {

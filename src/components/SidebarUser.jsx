@@ -9,6 +9,9 @@ import Api from '../Api'; // Sesuaikan dengan path ke file API Anda
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { PiMedalBold } from 'react-icons/pi';
+import { IoMailOpenOutline } from 'react-icons/io5';
+import { FaRegBell } from 'react-icons/fa6';
 
 const SidebarUser = () => {
   const [open, setOpen] = useState(true);
@@ -65,10 +68,10 @@ const SidebarUser = () => {
     { title: 'Dashboard', icon: <MdOutlineDashboard />, path: '/DashboardUser' },
     { title: 'Profile', icon: <BsBrowserEdge />, path: '/ProfileDashboard' },
     { title: 'Daftar-Lomba', icon: <FaClipboardList />, path: '/PendaftarLomba', spacing: true },
-    { title: 'Jadwal-Lomba', icon : <MdSchedule />, path: '/JadwalLombaUser' },
-    { title: 'Pemenang', path: '/PemenangUser' },
-    { title: 'Kotak-Saran', spacing: true, path: '/SaranUser' },
-    { title: 'Riwayat Daftar', path: '/RiwayatUser' },
+    { title: 'Jadwal-Lomba', icon: <MdSchedule />, path: '/JadwalLombaUser' },
+    { title: 'Pemenang', icon: <PiMedalBold />, path: '/PemenangUser' },
+    { title: 'Kotak-Saran', icon: <IoMailOpenOutline />, spacing: true, path: '/SaranUser' },
+    { title: 'Riwayat Daftar', icon: <FaRegBell />, path: '/RiwayatUser' },
     { title: 'Logout', spacing: true, onClick: handleLogout },
   ];
 
