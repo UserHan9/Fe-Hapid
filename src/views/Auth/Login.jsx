@@ -37,7 +37,7 @@ const Login = () => {
 
         // Navigasi ke halaman sesuai peran user
         if (roles.includes('admin')) {
-          navigate('/DashboardAdmin');
+          navigate("/AdminDashboard");
         } else {
           navigate('/DashboardUser');
         }

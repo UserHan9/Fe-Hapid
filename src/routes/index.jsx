@@ -63,7 +63,7 @@ export default function RoutesIndex() {
       />
       {/* Route untuk admin */}
       <Route path="/AdminDashboard" element={<AdminDashboard />} />
-      <Route path="/DashboardAdmin" element={<DashboardPages />} />
+      <Route path="/DashboardPages" element={<DashboardPages />} />
       <Route path="/DataKelas" element={<DataKelas />} />
       <Route path="/DataLomba" element={<DataLomba />} />
       <Route path="/JadwalLomba" element={<JadwalLomba />} />
@@ -83,7 +83,6 @@ export default function RoutesIndex() {
       <Route path="/PemenangUser" element={<PemenangUser />} />
       <Route path="/RiwayatUser" element={<RiwayatDaftarUser />} />
       <Route path="/SaranUser" element={<SaranUser />} />
-     
     </Routes>
   );
 }
