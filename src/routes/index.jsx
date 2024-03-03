@@ -18,7 +18,7 @@ import SaranUser from '../UserPages/SaranUser.jsx';
 import PostsLomba from '../pages/PostsLomba.jsx';
 import AddUserForm from '../components/AddUserForm.jsx';
 import UserAccount from '../pages/UserAccount.jsx';
-import ErrorPage from '../pages/404.jsx';
+// import ErrorPage from '../pages/404.jsx';
 
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
@@ -83,7 +83,7 @@ export default function RoutesIndex() {
       <Route path="/PemenangUser" element={<PemenangUser />} />
       <Route path="/RiwayatUser" element={<RiwayatDaftarUser />} />
       <Route path="/SaranUser" element={<SaranUser />} />
-      <Route path="*" element={<ErrorPage />} />
+      {/* <Route path="*" element={<ErrorPage />} /> */}
     </Routes>
   );
 }
