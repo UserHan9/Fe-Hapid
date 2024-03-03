@@ -29,7 +29,7 @@ const Login = () => {
 
         // Navigasi ke halaman sesuai peran user
         if (roles.includes('admin')) {
-          navigate('/DashboardPages');
+          navigate('/DashboardAdmin');
         } else {
           navigate('/DashboardUser');
         }

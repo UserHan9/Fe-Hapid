@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import React from 'react';
 import Sidebar from '../components/Sidebar';
 import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const DashboardPages = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -15,8 +18,17 @@ const DashboardPages = () => {
     console.log('Role:', role); // Tambahkan console log di sini
   }, []);
 
-  if (!isAdmin) {
-    return <div>Anda tidak memiliki izin untuk mengakses halaman ini.</div>;
+  if (!isAdmin) {     
+    return <div className='flex text-center'>
+    <div className='mx-auto mt-[300px]'>
+    <div className='text-3xl'>Anda tidak memiliki izin untuk mengakses halaman ini.
+    <h1 className='mt-5'>Error 404 Not Found</h1>
+    <div>
+      <Link to="/DashboardUser"><button className='btn bg-yellow-500 text-[20px] mt-5'>Kembali Ke Halaman Utama</button></Link>
+      </div>
+    </div>
+    </div>
+    </div>;
   }
 
   const totalRegistrants = 3;
