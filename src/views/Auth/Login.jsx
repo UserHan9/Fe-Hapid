@@ -27,7 +27,7 @@ const Login = () => {
         Cookies.set('user', JSON.stringify({ id, name, email: userEmail, roles }));
         Cookies.set('permissions', JSON.stringify(permissions));
         Cookies.set('roles', JSON.stringify(roles));
-        console.log(token);
+        console.log(token); //Log untuk melihat response
         console.log(response.data);
         // Simpan token, user, permissions, dan role ke local storage
         localStorage.setItem('token', token);
@@ -65,7 +65,7 @@ const Login = () => {
       } else if (error.request) {
         setErrors('Error jaringan. Silakan coba lagi nanti.');
       } else {
-        setErrors('Terjadi kesalahan yang tidak terduga');
+        // setErrors('Terjadi kesalahan yang tidak terduga');
       }
     } finally {
       setLoading(false);

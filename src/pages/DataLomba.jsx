@@ -17,7 +17,7 @@ const DataLomba = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   // Fetch data on initial load and when currentPage changes
-  useEffect(() => {
+  useEffect(() => { 
     fetchData();
   }, [currentPage]);
 

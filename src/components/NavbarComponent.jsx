@@ -1,6 +1,7 @@
 // NavbarComponent.js
 import React, { useState } from 'react';
 import { FaUserCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const NavbarComponent = ({ onLogout }) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -21,9 +22,12 @@ const NavbarComponent = ({ onLogout }) => {
         </svg>
         {showDropdown && (
           <div className="absolute bg-white shadow-lg rounded w-36 top-full right-0 mt-2">
-            <div className="text-gray-700 p-2 cursor-pointer hover:bg-gray-100" onClick={toggleDropdown}>
-              Profile
-            </div>
+            <Link to="/ProfileDashboard">
+              {' '}
+              <div className="text-gray-700 p-2 cursor-pointer hover:bg-gray-100" onClick={toggleDropdown}>
+                Profile
+              </div>
+            </Link>
             <div className="text-gray-700 p-2 cursor-pointer hover:bg-gray-100" onClick={onLogout}>
               Logout
             </div>

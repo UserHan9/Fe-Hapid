@@ -1,63 +1,55 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Sidebar from '../components/Sidebar';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Pemenang = () => {
-  const [emailData, setEmailData] = useState({
-    to: '',
-    subject: '',
-    message: '',
-    attachment: null, // File attachment
-    nama_lomba: '',
-    keterangan: '',
-    nama_kelas: '',
-  });
+  const dataPemenang = [
+    {
+      nama_lomba: 'Memasak',
+      nama_kelas: '11 PPLG 3 vs 11 PPLG 2',
+      jumlah_pemain: 5,
+      kelas_pemenang: '11 PPLG 2',
+    },
+    // tambahkan data pemenang lainnya sesuai kebutuhan
+  ];
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    setEmailData({ ...emailData, [name]: name === 'attachment' ? files[0] : value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('to', emailData.to);
-    formData.append('subject', emailData.subject);
-    formData.append('message', emailData.message);
-    formData.append('attachment', emailData.attachment);
-    formData.append('nama_lomba', emailData.nama_lomba);
-    formData.append('keterangan', emailData.keterangan);
-    formData.append('nama_kelas', emailData.nama_kelas);
-
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/pemenang-lomba', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error.response.data);
-    }
-  };
+  // const kirimSertifikat = (namaPemenang) => {
+  //   // implementasi fungsi untuk mengirim sertifikat
+  //   alert(`Mengirim sertifikat untuk ${namaPemenang}`);
+  // };
 
   return (
     <div className="flex">
       <Sidebar />
-      <div className="ml-10">
-        <h1 className="text-2xl text-gray-600">Input Email Sent To :</h1>
-        <form onSubmit={handleSubmit}>
-          <input type="email" name="to" value={emailData.to} onChange={handleChange} placeholder="Recipient Email" className="border border-gray-300 rounded-md p-2 mt-2" required />
-          <input type="text" name="subject" value={emailData.subject} onChange={handleChange} placeholder="Subject" className="border border-gray-300 rounded-md p-2 mt-2" required />
-          <textarea name="message" value={emailData.message} onChange={handleChange} placeholder="Message" className="border border-gray-300 rounded-md p-2 mt-2" required />
-          <input type="file" name="attachment" onChange={handleChange} className="border border-gray-300 rounded-md p-2 mt-2" />
-          <input type="text" name="nama_lomba" value={emailData.nama_lomba} onChange={handleChange} placeholder="Nama Lomba" className="border border-gray-300 rounded-md p-2 mt-2" required />
-          <input type="text" name="keterangan" value={emailData.keterangan} onChange={handleChange} placeholder="Keterangan" className="border border-gray-300 rounded-md p-2 mt-2" required />
-          <input type="text" name="nama_kelas" value={emailData.nama_kelas} onChange={handleChange} placeholder="Nama Kelas" className="border border-gray-300 rounded-md p-2 mt-2" required />
-          <button type="submit" className="bg-blue-500 text-white px-4 py-2 mt-2 rounded-md">
-            Send Email
-          </button>
-        </form>
+      <div className="overflow-x-auto mx-auto my-8">
+        <h1 className="text-3xl font-bold mb-4 ml-10 mt-5">Data Pemenang</h1>
+        <table className="table-auto ml-10">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 text-[23px] text-center">Nama Lomba</th>
+              <th className="px-4 py-2 text-[23px] text-center">Nama Kelas</th>
+              <th className="px-4 py-2 text-[23px] text-center">Jumlah Pemain</th>
+              <th className="px-4 py-2 text-[23px] text-center">Kelas Pemenang</th>
+              <th className="px-4 py-2 text-[23px] text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {dataPemenang.map((pemenang, index) => (
+              <tr key={index}>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.nama_lomba}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.nama_kelas}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.jumlah_pemain}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.kelas_pemenang}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">
+                  <Link to="/PemenangLomba">
+                    {' '}
+                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Kirim Sertifikat</button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { TbBinaryTree } from 'react-icons/tb';
-import { MdOutlineDashboard, MdSchedule } from 'react-icons/md';
+import { MdOutlineDashboard, MdOutlineLogout, MdSchedule } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { FaClipboardList } from 'react-icons/fa';
 import { BsBrowserEdge } from 'react-icons/bs';
@@ -72,7 +72,7 @@ const SidebarUser = () => {
     { title: 'Pemenang', icon: <PiMedalBold />, path: '/PemenangUser' },
     { title: 'Kotak-Saran', icon: <IoMailOpenOutline />, spacing: true, path: '/SaranUser' },
     { title: 'Riwayat Daftar', icon: <FaRegBell />, path: '/RiwayatUser' },
-    { title: 'Logout', spacing: true, onClick: handleLogout },
+    { title: 'Logout', icon: <MdOutlineLogout />, spacing: true, onClick: handleLogout },
   ];
 
   const handleNavigate = (path) => {
