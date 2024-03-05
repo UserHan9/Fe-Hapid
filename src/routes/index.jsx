@@ -62,8 +62,8 @@ export default function RoutesIndex() {
         }
       />
       {/* Route untuk admin */}
-      <Route path="/AdminDashboard" element={<AdminDashboard />} />
-      <Route path="/DashboardPages" element={<DashboardPages />} />
+      <Route path="/DashboardAdmin" element={<AdminDashboard />} />
+      <Route path="/AdminDashboard" element={<DashboardPages />} />
       <Route path="/DataKelas" element={<DataKelas />} />
       <Route path="/DataLomba" element={<DataLomba />} />
       <Route path="/JadwalLomba" element={<JadwalLomba />} />

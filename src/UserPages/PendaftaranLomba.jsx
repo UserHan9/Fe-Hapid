@@ -41,7 +41,7 @@ const PendaftaranLomba = () => {
               <figure className="px-2 pt-10">
                 <img src={`http://127.0.0.1:8000/storage/post_img/${lomba.image}`} alt="Lomba-image" className="rounded-xl" />
               </figure>
-              <div className="card-body items-center text-center">
+              <div className="card-body items-center text-center">x
                 <h2 className="card-title">PJ : {lomba.nama_pj}</h2>
                 <h3 className="text-[18px] font-semibold">Lomba : {lomba.nama_lomba}</h3>
                 <p className="font-semibold">Kontak : {lomba.kontak}</p>
