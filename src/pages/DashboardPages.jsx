@@ -11,7 +11,7 @@ const DashboardPages = () => {
     const roles = Cookies.get('roles');
     // Periksa apakah pengguna memiliki peran admin
     setIsAdmin(roles && JSON.parse(roles).includes('admin')); // Mengubah kondisi di sini
-    
+
     console.log('Role:', roles); // Tambahkan console log di sini
   }, []);
 
@@ -31,7 +31,10 @@ const DashboardPages = () => {
             <div className="px-32">
               <div className="m-10">
                 <h1 className="text-5xl font-bold text-center ml-5">Hallo, Admin 🤚</h1>
-                <p className="py-6 text-center text-2xl w-[500px] ml-32">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+                <p className="py-6 text-center text-2xl w-[500px] ml-32">
+                  Selamat Datang di dashboard admin, <br />
+                  Disini anda bisa manage mulai dari data lomba, jadwal lomba hingga pendaftaran lomba.
+                </p>
               </div>
               <div className="flex justify-center gap-10">
                 <div className="mt-8">

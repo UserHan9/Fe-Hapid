@@ -18,13 +18,16 @@ const AdminDashboard = () => {
   if (!isAdmin) {
     return (
       <div className="text-2xl">
-        <div></div>
-        <div className="text-2xl">Anda tidak memiliki izin untuk mengakses halaman ini.</div>
-        <div>
-          <Link to="/DashboardUser">
-            <button className="btn">Kembali ke halaman utama</button>
-          </Link>
-        </div>
+        <div className='flex text-center'>
+    <div className='mx-auto mt-[300px]'>
+    <div className='text-3xl'>Anda tidak memiliki izin untuk mengakses halaman ini.
+    <h1 className='mt-5'>Error 404 Not Found</h1>
+    <div>
+      <Link to="/DashboardUser"><button className='btn bg-yellow-500 text-[20px] mt-5'>Kembali Ke Halaman Utama</button></Link>
+      </div>
+    </div>
+    </div>
+    </div>
       </div>
     );
   }

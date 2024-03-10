@@ -10,7 +10,7 @@ const UserDashboard = () => {
           <div className="flex-col lg:flex-row-reverse w-full">
             <div className="px-20">
               <h1 className="text-5xl font-bold">Halo User!</h1>
-              <p className="py-6 w-64">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+              <p className="py-6 w-64">Memberikan cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
             </div>
           </div>
         </div>
