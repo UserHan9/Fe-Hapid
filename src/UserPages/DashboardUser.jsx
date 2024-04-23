@@ -28,7 +28,7 @@ const DashboardUser = () => {
             <h1 className="text-5xl font-bold">
               Halo {userData.name}, Selamat datang di <span className="text-green-300">SIMEET</span>
             </h1>
-            <p className="py-6 text-2xl">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            <p className="py-6 text-2xl">Providentt cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
           </div>
         </div>
       </div>
