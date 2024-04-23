@@ -62,9 +62,9 @@ const Sidebar = () => {
     { title: 'Create Account', spacing: true, icon: <IoPersonAdd />, path: '/UserAccount' },
     { title: 'Pemenang', icon: <PiMedalBold />, path: '/Pemenang' },
     { title: 'Kotak Saran', icon: <IoMailOpenOutline />, path: '/Saran' },
-    { title: 'Posts Lomba', icon: <IoMailOpenOutline />, path: '/PostsLomba' },
-    { title: 'Riwayat Daftar', icon: <FaRegBell />, spacing: true, path: '/RiwayatDaftar' },
-    { title: 'Keseluruhan Data', icon: <FaRegBell />, path: '/RiwayatDaftar' },
+    { title: 'Posts Lomba', icon: <IoMailOpenOutline />, spacing: true, path: '/PostsLomba' },
+    // { title: 'Riwayat Daftar', icon: <FaRegBell />, spacing: true, path: '/RiwayatDaftar' },
+    // { title: 'Keseluruhan Data', icon: <FaRegBell />, path: '/RiwayatDaftar' },
     { title: 'Logout', icon: <MdOutlineLogout />, onsubmit: handleLogout },
   ];
 
