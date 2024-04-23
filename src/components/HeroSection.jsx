@@ -13,7 +13,9 @@ const HeroSection = () => {
         <div className="lg:w-1/2 lg:pr-8">
           <h1 className="text-5xl font-bold">Selamat Datang Di</h1>
           <span className="text-5xl font-bold text-green-400 py-3">SIMEET</span>
-          <p className="py-6 text-[20px]">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+          <p className="py-6 text-[20px]">
+            Berkolaborasi dan Mengatur Lomba dengan Lebih Mudah dan Efisien. Aplikasi kami membantu Anda mengelola kompetisi dari awal hingga akhir, mulai dari pendaftaran peserta hingga penentuan pemenang.{' '}
+          </p>
           <button className="btn bg-green-400">Get Started</button>
         </div>
       </div>

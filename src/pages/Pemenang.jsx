@@ -1,22 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const Pemenang = () => {
-  const dataPemenang = [
-    {
-      nama_lomba: 'Memasak',
-      nama_kelas: '11 PPLG 3 vs 11 PPLG 2',
-      jumlah_pemain: 5,
-      kelas_pemenang: '11 PPLG 2',
-    },
-    // tambahkan data pemenang lainnya sesuai kebutuhan
-  ];
+  const [dataPemenang, setDataPemenang] = useState([]);
 
-  // const kirimSertifikat = (namaPemenang) => {
-  //   // implementasi fungsi untuk mengirim sertifikat
-  //   alert(`Mengirim sertifikat untuk ${namaPemenang}`);
-  // };
+  useEffect(() => {
+    axios
+      .get('http://127.0.0.1:8000/api/pemenangs')
+      .then((response) => {
+        setDataPemenang(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching winners:', error);
+      });
+  }, []);
 
   return (
     <div className="flex">
@@ -27,8 +26,9 @@ const Pemenang = () => {
           <thead>
             <tr>
               <th className="px-4 py-2 text-[23px] text-center">Nama Lomba</th>
-              <th className="px-4 py-2 text-[23px] text-center">Nama Kelas</th>
-              <th className="px-4 py-2 text-[23px] text-center">Jumlah Pemain</th>
+              <th className="px-4 py-2 text-[23px] text-center">Tanggal</th>
+              <th className="px-4 py-2 text-[23px] text-center">Waktu</th>
+              <th className="px-4 py-2 text-[23px] text-center">Tempat</th>
               <th className="px-4 py-2 text-[23px] text-center">Kelas Pemenang</th>
               <th className="px-4 py-2 text-[23px] text-center">Action</th>
             </tr>
@@ -37,12 +37,12 @@ const Pemenang = () => {
             {dataPemenang.map((pemenang, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2 text-[18px] text-center">{pemenang.nama_lomba}</td>
-                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.nama_kelas}</td>
-                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.jumlah_pemain}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.tanggal}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.waktu}</td>
+                <td className="border px-4 py-2 text-[18px] text-center">{pemenang.tempat}</td>
                 <td className="border px-4 py-2 text-[18px] text-center">{pemenang.kelas_pemenang}</td>
                 <td className="border px-4 py-2 text-[18px] text-center">
                   <Link to="/PemenangLomba">
-                    {' '}
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Kirim Sertifikat</button>
                   </Link>
                 </td>

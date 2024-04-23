@@ -52,7 +52,7 @@ const MendaftarLomba = ({ updateRiwayatDaftar }) => {
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Nama Peserta:
+            Nama Perwakilan:
             <input type="text" name="nama_peserta" value={formData.nama_peserta} onChange={handleChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
           </label>
         </div>

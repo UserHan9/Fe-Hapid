@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import { CiEdit } from 'react-icons/ci';
 import { MdDelete } from 'react-icons/md';
@@ -6,6 +7,7 @@ import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
 import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const JadwalLomba = () => {
   const [users, setUsers] = useState([]);
@@ -15,6 +17,7 @@ const JadwalLomba = () => {
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
+  const { jadwal_lomba_id } = useParams(); // Menyimpan jadwal_lomba_id dari URL
 
   useEffect(() => {
     fetchData();
@@ -69,7 +72,6 @@ const JadwalLomba = () => {
       }
     });
   };
-  
 
   const handleAddUser = async (event) => {
     event.preventDefault();
@@ -144,20 +146,23 @@ const JadwalLomba = () => {
                 <td className="text-[18px] border text-center">
                   <div className="flex">
                     <button className="mr-3 flex mb-2" onClick={() => handleEdit(user)}>
-                      <CiEdit className="mr-1" />
+                      {/* <CiEdit className="mr-1" /> */}
                       Edit
                     </button>
-                    <button onClick={() => handleDelete(user.id)} className="flex">
-                      <MdDelete className="mr-1" />
+                    <button onClick={() => handleDelete(user.id)} className="flex text-red-500">
+                      {/* <MdDelete className="mr-1" /> */}
                       Delete
                     </button>
+                    <Link to={`/CreatePemenang/${user.id}`} className="ml-2">
+                      <button className="text-blue-500 mb-2">Pemenang</button>
+                    </Link>
                   </div>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <div className="flex justify-between items-center mt-5">
+        <div className="flex items-center mt-5">
           <button className="btn ml-5 text-[18px]" onClick={() => setIsModalOpen(true)}>
             Tambah Jadwal
           </button>
@@ -173,6 +178,8 @@ const JadwalLomba = () => {
                   <option value="Futsal">Futsal</option>
                   <option value="Volly">Volly</option>
                   <option value="Handball">Handball</option>
+                  <option value="Handball">Basket</option>
+                  <option value="Handball">Estafet</option>
                 </select>
                 <label className="block mb-2">Tempat:</label>
                 <select value={newUser.tempat} onChange={(e) => setNewUser({ ...newUser, tempat: e.target.value })} className="w-full mb-4 p-2 border">
