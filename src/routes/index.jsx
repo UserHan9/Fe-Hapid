@@ -7,7 +7,7 @@ import DataLomba from '../pages/DataLomba.jsx';
 import JadwalLomba from '../pages/JadwalLomba.jsx';
 import Pemenang from '../pages/Pemenang.jsx';
 import Saran from '../pages/Saran.jsx';
-import RiwayatDaftar from '../pages/RiwayatDaftar.jsx';
+import RiwayatDaftar from '../pages/ExportData.jsx';
 import Profile from '../UserPages/Profile.jsx';
 import DashboardUser from '../UserPages/DashboardUser.jsx';
 import PendaftaranLomba from '../UserPages/PendaftaranLomba.jsx';
@@ -21,6 +21,7 @@ import UserAccount from '../pages/UserAccount.jsx';
 // import ErrorPage from '../pages/404.jsx';
 import PemenangLomba from '../pages/PemenangLomba.jsx';
 import CreatePemenang from '../pages/CreatePemenang.jsx';
+import ExportData from '../UserPages/ExportUser.jsx';
 //import loader component
 const Loader = lazy(() => import('../components/Loader.jsx'));
 
@@ -33,7 +34,7 @@ const Homepages = lazy(() => import('../pages/HomePages.jsx'));
 const UserDashboard = lazy(() => import('../views/Dashboard/UserDashboard.jsx'));
 const AdminDashboard = lazy(() => import('../views/Dashboard/AdminDashboard.jsx'));
 
-export default function RoutesIndex() {
+export default function   RoutesIndex() {
   return (
     <Routes>
       {/* route "/" */}
@@ -79,7 +80,7 @@ export default function RoutesIndex() {
       <Route path="/Saran" element={<Saran />} />
       <Route path="/PostsLomba" element={<PostsLomba />} />
       <Route path="/UserAccount" element={<UserAccount />} />
-      <Route path="/RiwayatDaftar" element={<RiwayatDaftar />} />
+      <Route path="/Export" element={<RiwayatDaftar />} />
       <Route path="/Posts" element={<PostsLomba />} />
       <Route path="/PemenangLomba" element={<PemenangLomba />} />
       {/* <Route path="/CreatePemenang" element={<CreatePemenang />} /> */}
@@ -93,6 +94,7 @@ export default function RoutesIndex() {
       <Route path="/PemenangUser" element={<PemenangUser />} />
       <Route path="/RiwayatUser" element={<RiwayatDaftarUser />} />
       <Route path="/SaranUser" element={<SaranUser />} />
+      <Route path="/ExportUser" element={<ExportData/>} />
       {/* <Route path="*" element={<ErrorPage />} /> */}
     </Routes>
   );

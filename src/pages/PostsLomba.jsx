@@ -47,7 +47,7 @@ const PostsLomba = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="px-32 py-14 mx-2">
+      <div className=" overflow-y-auto h-[600px] px-32 py-10 w-[1100px] mx-2">
         <h1 className="text-3xl font-bold mb-6 ml-3">Posts Lomba - Create Lomba Untuk Peserta</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">

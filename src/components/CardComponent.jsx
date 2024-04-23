@@ -14,22 +14,22 @@ const CardComponent = () => {
         <div className="bg-white rounded-lg shadow-md overflow-hidden mt-5">
           <img className="w-full h-56 object-cover" src={image} alt="hehe" />
           <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-800">Volly</h3>
-            <p className="text-sm text-gray-600">Volly adalah..</p>
+            <h3 className="text-lg font-semibold text-gray-800 text-left">Volly</h3>
+            <p className="text-sm text-gray-600 text-left">Volly adalah..</p>
           </div>
         </div>
         <div className="bg-white rounded-lg shadow-md overflow-hidden mt-5">
           <img className="w-full h-56 object-cover object-center" src={futsal} alt="hehe" />
           <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-800">Futsal</h3>
-            <p className="text-sm text-gray-600">Futsal adalah..</p>
+            <h3 className="text-lg font-semibold text-gray-800 text-left">Futsal</h3>
+            <p className="text-sm text-gray-600 text-left">Futsal adalah..</p>
           </div>
         </div>
         <div className="bg-white rounded-lg shadow-md overflow-hidden mt-5">
           <img className="w-full h-56 object-cover object-center" src={image} alt="hehe" />
           <div className="p-4">
-            <h3 className="text-lg font-semibold text-gray-800">Handball</h3>
-            <p className="text-sm text-gray-600">Handbal adalah..</p>
+            <h3 className="text-lg font-semibold text-gray-800 text-left">Handball</h3>
+            <p className="text-sm text-gray-600 text-left">Handbal adalah..</p>
           </div>
         </div>
       </div>

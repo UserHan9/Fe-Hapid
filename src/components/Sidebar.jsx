@@ -9,9 +9,10 @@ import { toast } from 'react-hot-toast'; // Pastikan Anda mengimpor dan mengonfi
 import { MdOutlineSchedule } from 'react-icons/md';
 import { IoMailOpenOutline, IoPersonAdd } from 'react-icons/io5';
 import { PiMedalBold } from 'react-icons/pi';
-import { FaRegBell } from 'react-icons/fa6';
+import { CiMenuBurger } from "react-icons/ci";
 import { PiBookOpenBold } from 'react-icons/pi';
-import NavbarComponent from './NavbarComponent';
+import { BiSolidFileExport } from "react-icons/bi";
+import image from "../assets/images/Logo-Harmoni.png"
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
@@ -63,7 +64,7 @@ const Sidebar = () => {
     { title: 'Pemenang', icon: <PiMedalBold />, path: '/Pemenang' },
     { title: 'Kotak Saran', icon: <IoMailOpenOutline />, path: '/Saran' },
     { title: 'Posts Lomba', icon: <IoMailOpenOutline />, spacing: true, path: '/PostsLomba' },
-    // { title: 'Riwayat Daftar', icon: <FaRegBell />, spacing: true, path: '/RiwayatDaftar' },
+    { title: 'Export Data', icon: <BiSolidFileExport />, path: '/Export' },
     // { title: 'Keseluruhan Data', icon: <FaRegBell />, path: '/RiwayatDaftar' },
     { title: 'Logout', icon: <MdOutlineLogout />, onsubmit: handleLogout },
   ];
@@ -73,14 +74,17 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex">
-      <div className={`bg-dark-purple h-screen p-5 pt-8 ${open ? 'w-72' : 'w-20'} duration-300 relative`}>
-        <BsArrowLeftCircle className={`bg-white text-dark-purple text-3xl rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${!open && 'rotate-180'}`} onClick={() => setOpen(!open)} />
+    <div className="sticky overflow-y-auto h-full flex">
+    <div className={`bg-dark-purple h-screen overflow-y-auto p-5 pt-8 ${open ? 'w-72' : 'w-20'} duration-300 relative`} style={{ paddingRight: open ? '' : '0' }}>
+
 
         <div className="inline-flex">
-          <TbBinaryTree className={`bg-amber-300 text-4xl rounded cursor-pointer block float-left mr-2 duration-500 ${open && 'rotate-[360deg]'}`} />
-
+          <TbBinaryTree className={`bg-amber-300 text-4xl rounded cursor-pointer block float-left mr-2 duration-500 ${open && 'rotate-[360deg]'} ${!open && 'hidden'}`} />
           <h1 className={`text-white origin-left font-medium text-2xl duration-300 ${!open && 'scale-0'}`}>SIMEET</h1>
+          <CiMenuBurger className={`fill-white text-dark rounded-full absolute right-3 border border-dark-purple cursor-pointer ${!open && 'rotate-180'}`} onClick={() => setOpen(!open)} />
+          {/* <BsArrowLeftCircle className={`bg-white text-dark-purple l rounded-full absolute -right-3 top-9 border border-dark-purple cursor-pointer ${!open && 'rotate-180'}`} onClick={() => setOpen(!open)} /> */}
+         
+
         </div>
 
         <ul className="pt-2">
@@ -90,8 +94,8 @@ const Sidebar = () => {
               className={`text-green-300 text-sm flex items-center gap-x-4 cursor-pointer p-2 hover:bg-light-white rounded-md ${menu.spacing ? 'mt-9' : 'mt-2'}`}
               onClick={() => (menu.onsubmit ? menu.onsubmit() : handleNavigate(menu.path))}
             >
-              {menu.icon ? <span className="mr-2">{menu.icon}</span> : <img src="" alt="" className={`text-dark-purple transition-all duration-300 ${!open && 'filter grayscale'}`} />}
-              <span className={`text-base font-medium flex-1 duration-200 ${!open && 'hidden'}`}>{menu.title}</span>
+              {menu.icon ? <span className="mr-2 mb-2">{menu.icon}</span> : <img src="" alt="" className={`text-dark-purple transition-all duration-300 ${!open && 'filter grayscale'}`} />}
+              <span className={`text-[18px] mb-2 font-medium flex-1 duration-200 ${!open && 'hidden'}`}>{menu.title}</span>
             </li>
           ))}
         </ul>

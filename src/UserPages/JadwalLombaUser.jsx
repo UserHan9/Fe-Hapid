@@ -3,8 +3,6 @@ import axios from 'axios';
 
 import { FaSearch } from 'react-icons/fa';
 import Layout from '../components/Layout';
-import SidebarUser from '../components/SidebarUser';
-import NavbarComponent from '../components/NavbarComponent';
 
 const JadwalLombaUser = () => {
   const [jadwal, setJadwal] = useState([]);
@@ -26,14 +24,14 @@ const JadwalLombaUser = () => {
   const filteredJadwal = jadwal.filter((item) => item.nama_lomba.toLowerCase().includes(searchKeyword.toLowerCase()));
 
   return (
-    <div className="relative">
+    <div >
       <Layout>
-        <div className="ml-10">
+        <div className="ml-5 overflow-y-auto h-[500px]">
           <div className="flex justify-end items-center mb-3 mr-3">
             <FaSearch className="mt-4 ml-10" />
             <input type="text" placeholder="Search by nama lomba..." value={searchKeyword} onChange={(e) => setSearchKeyword(e.target.value)} className="border p-2 rounded-md ml-5 mr-10 mt-5" />
           </div>
-          <div className="flex gap-5">
+          <div className="grid grid-cols-3">
             {filteredJadwal.map((item) => (
               <div key={item.id} className="border p-4 ml-3 mt-5 bg-gray-700 w-72 h-60 text-white text-[18px] font-semibold rounded-lg">
                 <h2 className="font-bold mb-2 text-2xl">{item.nama_lomba}</h2>
