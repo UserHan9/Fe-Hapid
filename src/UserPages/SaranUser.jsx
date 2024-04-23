@@ -79,7 +79,7 @@ const Saran = () => {
   return (
     <div className="flex">
       <SidebarUser />
-      <div className="container pt-10 lg:flex lg:flex-row lg:gap-x-3">
+      <div className="container h-96 overflow-y-auto pt-10 lg:flex lg:flex-row lg:gap-x-3">
         <div className="max-w-4xl justify-center mx-auto lg:w-1/2">
           <p className="text-lg font-bold ml-10 ">Masukan Saran :</p>
           <div className="mb-6 lg:mt-5">
@@ -100,9 +100,9 @@ const Saran = () => {
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   No
                 </th>
-                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                {/* <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Pengirim
-                </th>
+                </th> */}
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Pesan
                 </th>
@@ -112,7 +112,7 @@ const Saran = () => {
               {chats.map((chat, index) => (
                 <tr key={chat.id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
                   <td className="px-6 py-4 whitespace-nowrap">{index + 1}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{chat.user_name}</td>
+                  {/* <td className="px-6 py-4 whitespace-nowrap">{chat.user_name}</td> */}
                   <td className="px-6 py-4 whitespace-nowrap">{chat.message}</td>
                 </tr>
               ))}

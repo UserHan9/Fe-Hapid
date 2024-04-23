@@ -3,6 +3,8 @@ import axios from 'axios';
 // Import js-cookie for handling cookies
 import Cookies from 'js-cookie';
 
+import { toast } from 'react-toastify';
+
 // Create Axios instance
 const Api = axios.create({
   // Base URL for API endpoints
@@ -13,33 +15,38 @@ const Api = axios.create({
   },
 });
 
-// Handle unauthenticated and forbidden responses
-Api.interceptors.response.use(
-  function (response) {
-   
-    return response;
-  },
-  function (error) {
-  
-    if (401 === error.response.status) {
-      // Remove token from cookies
-      Cookies.remove('token');  
-      // Remove user data from cookies
-      Cookies.remove('user');
-      // Remove permissions from cookies
-      Cookies.remove('permissions');
-      // Redirect to "/"
-      window.location = '/';
-    } 
- 
-    else if (403 === error.response.status) {
-      window.location = '/forbidden';
-    } 
-    // For other errors, reject the promise
-    else {
-      return Promise.reject(error);
-    }
+Api.interceptors.request.use(function (config) {
+  const token = Cookies.get('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
+
+  // Handle unauthenticated and forbidden responses
+  Api.interceptors.response.use(  
+    function (response) {
+      return response;
+    },
+    function (error) {
+      if (401 === error.response.status) {
+        Cookies.remove('token');
+        Cookies.remove('user');
+        Cookies.remove('permissions');
+        // Tidak melakukan redirect, hanya menghapus token dari cookies
+      } else if (403 === error.response.status) {
+        // Tidak melakukan redirect, hanya menampilkan pesan kesalahan
+        toast.error("ADA KESALAHAN TIDAK TERDUGA", {
+          position : "top-center",
+          duration: 4000
+        });
+      } else {
+        return Promise.reject(error);
+      }
+    }
+  );
+  
 
 export default Api;

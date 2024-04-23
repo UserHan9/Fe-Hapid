@@ -18,6 +18,7 @@ const JadwalLomba = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const { jadwal_lomba_id } = useParams(); // Menyimpan jadwal_lomba_id dari URL
+  const today = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     fetchData();
@@ -114,13 +115,13 @@ const JadwalLomba = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="overflow-x-auto mx-auto my-8">
-        <h1 className="text-3xl font-bold mb-6 ml-3">Data Jadwal Lomba - Data Peserta</h1>
-        <div className="flex justify-end items-center mb-3 mr-3">
+      <div className=" overflow-y-auto h-[600px]">
+        <h1 className="text-3xl font-bold mt-3 ml-3">Data Jadwal Lomba - Data Peserta</h1>
+        <div className="flex justify-end items-center">
           <FaSearch className="mx-3" />
           <input type="text" placeholder="Cari Nama Lomba" className="border rounded p-2 mr-2" value={searchTerm} onChange={handleSearch} />
         </div>
-        <table className="table w-full mt-10 ml-5">
+        <table className="table w-[1000px] mt-10 ml-5">
           <thead>
             <tr className="font-extrabold">
               <th className="text-[23px] text-center">ID</th>
@@ -170,7 +171,7 @@ const JadwalLomba = () => {
         {isModalOpen && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-4 rounded w-96">
-              <h3 className="font-bold text-lg mb-4">Tambah Peserta Baru</h3>
+              <h3 className="font-bold text-lg mb-4">Tambah Jadwal Peserta</h3>
               <form onSubmit={selectedUserId ? handleUpdate : handleAddUser}>
                 <label className="block mb-2">Nama Lomba:</label>
                 <select value={newUser.nama_lomba} onChange={(e) => setNewUser({ ...newUser, nama_lomba: e.target.value })} className="w-full mb-4 p-2 border">
@@ -190,14 +191,14 @@ const JadwalLomba = () => {
                 <label className="block mb-2">Kelas:</label>
                 <input type="text" value={newUser.kelas} onChange={(e) => setNewUser({ ...newUser, kelas: e.target.value })} className="w-full mb-4 p-2 border" />
                 <label className="block mb-2">Tanggal:</label>
-                <input type="date" value={newUser.tanggal} onChange={(e) => setNewUser({ ...newUser, tanggal: e.target.value })} className="w-full mb-4 p-2 border" />
+                <input type="date" value={newUser.tanggal} onChange={(e) => setNewUser({ ...newUser, tanggal: e.target.value })} min={today} className="w-full mb-4 p-2 border" />
                 <label className="block mb-2">Waktu</label>
                 <input type="time" value={newUser.waktu} onChange={handleWaktuChange} className="w-full mb-4 p-2 border" />
                 {errorMessage && <p className="text-red-500 text-sm mb-2">{errorMessage}</p>}
                 <label className="block mb-2">Keterangan:</label>
                 <select value={newUser.keterangan} onChange={(e) => setNewUser({ ...newUser, keterangan: e.target.value })} className="w-full mb-4 p-2 border">
                   <option value="">Pilih Keterangan</option>
-                  <option className="text-green-300" value="Berlangsung">
+                  <option  value="Berlangsung">
                     Berlangsung
                   </option>
                   <option value="Selesai">Selesai</option>

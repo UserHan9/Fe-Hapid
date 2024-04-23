@@ -9,9 +9,9 @@ const TeamSection = () => {
       <div>
         <h1 className="text-5xl font-bold text-center mt-20 mb-10">Teams</h1>
         <div className="hero min-h-screen bg-base-300">
-          <div className="hero-content text-center">
+          <div className="hero-content text-center sm:block lg:flex">
             <div className="card w-96 bg-base-100 shadow-xl">
-              <figure className="px-8 pt-8">
+              <figure className="px-8 pt-8 mt-10">
                 <img src={image} alt="Shoes" className="rounded-xl" />
               </figure>
               <div className="card-body items-center text-center">

@@ -12,7 +12,7 @@ const HeroSection = () => {
         </div>
         <div className="lg:w-1/2 lg:pr-8">
           <h1 className="text-5xl font-bold">Selamat Datang Di</h1>
-          <span className="text-5xl font-bold text-green-400 py-3">SIMEET</span>
+          <span className="text-5xl font-bold text-green-400 py-3">SI Classmeet</span>
           <p className="py-6 text-[20px]">
             Berkolaborasi dan Mengatur Lomba dengan Lebih Mudah dan Efisien. Aplikasi kami membantu Anda mengelola kompetisi dari awal hingga akhir, mulai dari pendaftaran peserta hingga penentuan pemenang.{' '}
           </p>

@@ -6,15 +6,19 @@ import { faEnvelope, faLock, faArrowLeft } from '@fortawesome/free-solid-svg-ico
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import toast from 'react-hot-toast';
 import Logo from '../../assets/images/Logo-Harmoni.png';
+import { useFormik } from 'formik';
+import * as yup from "yup"
 
 const Login = () => {
+  document.title = "Login Page "
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState(null);
-
   const handleLogin = async (email, password) => {
     setLoading(true);
     setErrors(null);
+    
+    
 
     try {
       const response = await Api.post('api/login', { email, password });
@@ -29,15 +33,17 @@ const Login = () => {
         Cookies.set('roles', JSON.stringify(roles));
         console.log(token); //Log untuk melihat response
         console.log(response.data);
+        
         // Simpan token, user, permissions, dan role ke local storage
         localStorage.setItem('token', token);
         localStorage.setItem('user', JSON.stringify({ id, name, email: userEmail, roles }));
         localStorage.setItem('permissions', JSON.stringify(permissions));
         localStorage.setItem('roles', JSON.stringify(roles));
+        console.log(localStorage, JSON.stringify(name, id))
 
         // Navigasi ke halaman sesuai peran user
-        if (roles.includes('admin')) {
-          navigate("/AdminDashboard");
+        if (roles.includes('admin')) {  
+          navigate('/DashboardPages');
         } else {
           navigate('/DashboardUser');
         }
@@ -65,30 +71,59 @@ const Login = () => {
       } else if (error.request) {
         setErrors('Error jaringan. Silakan coba lagi nanti.');
       } else {
-        // setErrors('Terjadi kesalahan yang tidak terduga');
+        setErrors('Terjadi kesalahan yang tidak terduga');
       }
     } finally {
       setLoading(false);
     }
   };
 
+  const LoginSchema = yup.object().shape({
+    email : yup.string().email("Masukan Email Anda menggunakan@").required('EMAIL WAJIB DIISI'),
+    password: yup.string().required('Password Wajib Diisi') 
+  .min(8, 'Password harus memiliki 8 huruf - minimum harus ada 8 chars.')
+  .matches(
+    /^.{8,}$/,
+    "Minimal Memiliki 8 karakter"
+  )
+  });
+
+  
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
+   onSubmit:handleLogin,
+    validationSchema : LoginSchema
+  });
+
+  const handleForm = (event) => { 
+    const { target } = event;
+    formik.setFieldValue(target.name, target.value);
+  };
+  
+  
+
   return (
     <div className="w-full h-screen flex rounded-lg">
-      <div className="grid grid-cols-1 md:grid-cols-2 m-auto h-[480px] shadow-lg shadow-green-800 sm:max-w-[850px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 m-auto h-[500px] shadow-lg shadow-green-800 sm:max-w-[950px]">
         <div className="w-full h-[480px] hidden md:block">
           <div className="w-full h-full object-cover border rounded-md">
             <img className="py-[30px]" src={Logo} alt="Harmoni Tech Logo" />
           </div>
         </div>
+    
         <div className="p-4 flex flex-col justify-around">
-          <form
-            className="max-w-md mx-auto"
-            onSubmit={(e) => {
-              e.preventDefault();
-              const formData = new FormData(e.target);
-              handleLogin(formData.get('email'), formData.get('password'));
-            }}
-          >
+        <form
+  className="max-w-md mx-auto"
+  onSubmit={(e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    handleLogin(formData.get('email'), formData.get('password'));
+  }}
+>
             <h2 className="text-4xl font-bold text-center mb-8 text-gray-800">
               Selamat Datang di Si-Meet <span className="text-gray-700 mt-2">Harmoni Tech</span>
             </h2>
@@ -96,22 +131,24 @@ const Login = () => {
               <label htmlFor="email" className="block text-gray-700 text-sm font-bold mb-2">
                 Email
               </label>
+              <p className='text-red-500'>{formik.errors.email}</p>
               <div className="flex items-center text-justify">
                 <span className="md:w-6">
                   <FontAwesomeIcon icon={faEnvelope} />
                 </span>
-                <input id="email" type="text" name="email" className="form-control w-full border p-2 rounded-lg" placeholder="Masukkan Alamat Email" />
+                <input onChange={handleForm} id="email" type="text" name="email" className="form-control w-full border p-2 rounded-lg" placeholder="Masukkan Alamat Email" />
               </div>
             </div>
             <div className="mb-4">
               <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
                 Kata Sandi
               </label>
+              <p className='text-red-500'>{formik.errors.password}</p>
               <div className="flex items-center text-justify">
                 <span className="md:w-6">
                   <FontAwesomeIcon icon={faLock} />
                 </span>
-                <input id="password" type="password" name="password" className="form-control w-full border p-2 rounded-lg" autoComplete="off" placeholder="Masukkan Kata Sandi Anda" />
+                <input onChange={handleForm} id="password" type="password" name="password" className="form-control w-full border p-2 rounded-lg" autoComplete="off" placeholder="Masukkan Kata Sandi Anda" />
               </div>
             </div>
             <button type="submit" className="w-full py-2 bg-green-400 hover:bg-green-800 rounded-md mb-4 text-[20px]" disabled={loading}>

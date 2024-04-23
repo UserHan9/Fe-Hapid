@@ -1,4 +1,3 @@
-// Import dependencies
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { CiEdit } from 'react-icons/ci';
@@ -7,38 +6,35 @@ import Sidebar from '../components/Sidebar';
 import Swal from 'sweetalert2';
 import Edit from '../components/Edit';
 
-// Define DataLomba component
 const DataLomba = () => {
-  // State variables
   const [userData, setUserData] = useState([]);
   const [editUser, setEditUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Fetch data on initial load and when currentPage changes
-  useEffect(() => { 
+  useEffect(() => {
     fetchData();
   }, [currentPage]);
 
-  // Function to fetch data from backend
   const fetchData = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/lomba/show');
+      const response = await axios.get(`http://127.0.0.1:8000/api/lomba/show?page=${currentPage}`);
       setUserData(response.data);
-      setTotalPages(1); // Since we are not paginating data in this example, totalPages is always 1
+      setTotalPages(response.data.last_page);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
   };
+    const handlePageChange = (page) => {
+      setCurrentPage(page);
+  };
 
-  // Function to handle edit action
   const handleEdit = (user) => {
     setEditUser(user);
     setIsModalOpen(true);
   };
 
-  // Function to handle edit user
   const handleEditUser = async (editedUser) => {
     try {
       await axios.put(`http://127.0.0.1:8000/api/lomba/update/${editedUser.id}`, editedUser);
@@ -61,7 +57,6 @@ const DataLomba = () => {
     setEditUser(null);
   };
 
-  // Function to handle delete action
   const handleDelete = async (userId) => {
     try {
       const result = await Swal.fire({
@@ -87,11 +82,17 @@ const DataLomba = () => {
     }
   };
 
-  // Render component
+  if(userData.length === 0) {
+    return <div className='flex'>
+        <Sidebar />
+      <h1 className='text-2xl'>Loading...</h1>
+      </div>
+  }
+
   return (
-    <div className="flex">
+    <div className="relative overflow-y-auto h-full flex ">
       <Sidebar />
-      <div className="overflow-x-auto mx-auto my-8">
+      <div className="overflow-y-auto flex-1">
         <h1 className="text-3xl font-bold mb-6 ml-3">Data Lomba - SI-Classmeet</h1>
         <table className="table w-full mt-10">
           <thead>
@@ -132,11 +133,17 @@ const DataLomba = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-center items-center mt-5">
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button key={index + 1} onClick={() => handlePageChange(index + 1)} className="font-semibold  mx-1 px-5 py-3 rounded-full bg-green-300">
+                {index + 1}
+              </button>
+            ))}
+          </div>
       </div>
       {isModalOpen && <Edit user={editUser} setIsModalOpen={setIsModalOpen} fetchData={fetchData} />}
     </div>
   );
 };
 
-// Export component
 export default DataLomba;

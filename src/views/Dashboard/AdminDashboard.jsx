@@ -22,7 +22,7 @@ const AdminDashboard = () => {
     return (
       <div className="text-2xl">
         <div className='flex text-center'>
-    <div className='mx-auto mt-[300px]'>
+    <div className='mx-auto mt-[250px]'>
     <div className='text-3xl'>Anda tidak memiliki izin untuk mengakses halaman ini.
     <h1 className='mt-5'>Error 404 Not Found</h1>
     <div>
